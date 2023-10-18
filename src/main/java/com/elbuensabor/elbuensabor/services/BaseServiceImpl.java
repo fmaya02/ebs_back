@@ -1,4 +1,4 @@
-package com.facu.restfake.services;
+package com.elbuensabor.elbuensabor.services;
 
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseServiceImpl<E extends BaseEntity, ID extends Serializable> implements com.facu.restfake.services.BaseService<E, ID> {
+public abstract class BaseServiceImpl<E extends BaseEntity, ID extends Serializable> implements BaseService<E, ID> {
     protected BaseRepository<E,ID> baseRepository;
 
     public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
