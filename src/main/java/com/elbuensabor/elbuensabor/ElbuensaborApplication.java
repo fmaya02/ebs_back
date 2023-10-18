@@ -92,7 +92,7 @@ public class ElbuensaborApplication {
 					.cliente(cliente1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)
-					.estado(EstadoPedido.PENDIENTE_PAGO)
+					.estado(EstadoPedido.A_CONFIRMAR)
 					.pedidoDetalles(arraydetalle)
 					.build();
 			pedidoRepository.save(pedido1);
