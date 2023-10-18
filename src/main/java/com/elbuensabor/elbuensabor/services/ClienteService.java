@@ -9,4 +9,5 @@ public interface ClienteService extends BaseService<Cliente,Long>{
     Page<Cliente> searchClienteApellido(String apellido, Pageable pageable) throws Exception;
 
     Page<Cliente> searchClienteNombre(String nombre, Pageable pageable) throws Exception;
+
 }
