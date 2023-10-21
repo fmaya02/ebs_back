@@ -1,4 +1,4 @@
-package com.facu.restfake.controllers;
+package com.elbuensabor.elbuensabor.controllers;
 
 import com.elbuensabor.elbuensabor.ElbuensaborApplication;
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.elbuensabor.elbuensabor.services.*;
+import com.elbuensabor.elbuensabor.controllers.*;
 
 
-public abstract class BaseControllerImpl<E extends BaseEntity, S extends com.facu.restfake.services.BaseServiceImpl<E,Long>> implements com.facu.restfake.controllers.BaseController<E, Long> {
+public abstract class BaseControllerImpl<E extends BaseEntity, S extends BaseServiceImpl<E,Long>> implements BaseController<E, Long> {
     @Autowired
     protected S servicio;
 
@@ -20,8 +22,6 @@ public abstract class BaseControllerImpl<E extends BaseEntity, S extends com.fac
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
-
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
