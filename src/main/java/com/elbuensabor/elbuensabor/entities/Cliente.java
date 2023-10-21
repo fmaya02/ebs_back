@@ -37,7 +37,7 @@ public class Cliente extends BaseEntity{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaBaja;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name="cliente_id")
     private List<Domicilio> domicilios=new ArrayList<>();
 

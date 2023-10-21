@@ -97,6 +97,8 @@ public class ElbuensaborApplication {
 					.build();
 			pedidoRepository.save(pedido1);
 
+
+			System.out.println("Corriendo API\n");
 		};
 	}
 }
