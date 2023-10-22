@@ -1,5 +1,7 @@
 package com.elbuensabor.elbuensabor.services;
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 import java.io.Serializable;
@@ -16,5 +18,7 @@ public interface BaseService  <E extends BaseEntity,ID extends Serializable> {
     public E update(ID id, E entity) throws Exception;
 
     public boolean delete(ID id) throws Exception;
+
+    public Page<E> findAll(Pageable pageable) throws Exception;
 
 }

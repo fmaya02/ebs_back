@@ -4,8 +4,9 @@ import com.elbuensabor.elbuensabor.entities.BaseEntity;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,17 @@ public abstract class BaseServiceImpl<E extends BaseEntity, ID extends Serializa
     public List<E> findALL() throws Exception {
         try {
             List<E> entities = baseRepository.findAll();
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public Page<E> findAll(Pageable pageable) throws Exception {
+        try {
+            Page<E> entities = baseRepository.findAll(pageable);
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
