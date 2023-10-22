@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cliente extends BaseEntity{
+public class Persona extends BaseEntity{
     private String nombre;
 
     private String apellido;

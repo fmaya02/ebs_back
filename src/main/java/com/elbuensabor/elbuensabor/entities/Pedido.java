@@ -62,7 +62,7 @@ public class Pedido extends BaseEntity{
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    private Persona persona;
 
     @NotNull
     @Column(name = "fecha_alta")
