@@ -37,4 +37,7 @@ public class Usuario extends BaseEntity{
 
     @Column(name = "rol")
     private Rol rol;
+
+    @Column(name = "contraseña")
+    private String contraseña;
 }

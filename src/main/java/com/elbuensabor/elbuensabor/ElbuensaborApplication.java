@@ -53,15 +53,15 @@ public class ElbuensaborApplication {
 					.build();
 			domicilioRepository.save(domicilio1);
 
-			Cliente cliente1 = Cliente.builder()
+			Persona persona1 = Persona.builder()
 					.nombre("Geralt")
 					.apellido("de Rivia")
 					.fechaAlta(new Date())
 					.email("geralt.derivia@kaermorhen.com")
 					.domicilios(new ArrayList<Domicilio>())
 					.build();
-			cliente1.addDomicilio(domicilio1);
-			clienteRepository.save(cliente1);
+			persona1.addDomicilio(domicilio1);
+			clienteRepository.save(persona1);
 
 			RubroArticulo rubroArticulo1 = RubroArticulo.builder()
 					.fechaAlta(new Date())
@@ -89,13 +89,15 @@ public class ElbuensaborApplication {
 
 			Pedido pedido1 = Pedido.builder()
 					.fechaAlta(new Date())
-					.cliente(cliente1)
+					.persona(persona1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)
 					.estado(EstadoPedido.A_CONFIRMAR)
 					.pedidoDetalles(arraydetalle)
 					.build();
 			pedidoRepository.save(pedido1);
+
+			System.out.println("Corriendo API\n");
 
 		};
 	}

@@ -4,7 +4,7 @@
 
 ## Integrantes
 
-* Avila, Lucas 43830 
+* Pino, Facundo 97877
 * Fernandez, Alejandro 46963 
 * Duran, Tatiana 41385 
 * Espeche, Marcos 49023 

@@ -1,6 +1,5 @@
 package com.elbuensabor.elbuensabor.services;
 
-import com.elbuensabor.elbuensabor.entities.Cliente;
 import com.elbuensabor.elbuensabor.entities.Pedido;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
 import org.springframework.data.domain.Page;
