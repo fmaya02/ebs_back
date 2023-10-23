@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Entity
-@Table(name="cliente")
+@Table(name="persona")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class Persona extends BaseEntity{
 
     private String email;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
@@ -48,5 +48,7 @@ public class Persona extends BaseEntity{
     public void addDomicilio(Domicilio domicilio) {
         this.domicilios.add(domicilio);
     }
+
+    public void setUsuario(Usuario usuario){ this.usuario = usuario;}
 
 }

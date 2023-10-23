@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor;
 
 import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
+import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.Date;
 @SpringBootApplication
 public class ElbuensaborApplication {
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private PersonaRepository personaRepository;
 	@Autowired
 	private DomicilioRepository domicilioRepository;
 	@Autowired
@@ -31,12 +32,15 @@ public class ElbuensaborApplication {
 	@Autowired
 	private RubroArticuloRepository rubroArticuloRepository;
 
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ElbuensaborApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository) {
+	CommandLineRunner init(PersonaRepository personaRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository) {
 		return args -> {
 
 			Localidad localidad1 = Localidad.builder()
@@ -53,15 +57,24 @@ public class ElbuensaborApplication {
 					.build();
 			domicilioRepository.save(domicilio1);
 
+			Usuario usuario1 = Usuario.builder()
+					.auth0Id("123")
+					.contraseña("yeneffer")
+					.username("geraltRivia")
+					.rol(Rol.CLIENTE)
+					.fechaAlta(new Date())
+					.build();
+			usuarioRepository.save(usuario1);
 			Persona persona1 = Persona.builder()
 					.nombre("Geralt")
 					.apellido("de Rivia")
 					.fechaAlta(new Date())
 					.email("geralt.derivia@kaermorhen.com")
 					.domicilios(new ArrayList<Domicilio>())
+					.usuario(usuario1)
 					.build();
 			persona1.addDomicilio(domicilio1);
-			clienteRepository.save(persona1);
+			personaRepository.save(persona1);
 
 			RubroArticulo rubroArticulo1 = RubroArticulo.builder()
 					.fechaAlta(new Date())
