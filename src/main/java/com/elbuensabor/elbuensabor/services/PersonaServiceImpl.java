@@ -1,11 +1,12 @@
 package com.elbuensabor.elbuensabor.services;
 
+import com.elbuensabor.elbuensabor.dto.DTOCliente;
+import com.elbuensabor.elbuensabor.mappers.PersonaMapper;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.PersonaRepository;
-import com.elbuensabor.elbuensabor.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
 
+    //todo poner el personamapper aca para poder hacer los updates de los campos necesarios
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
@@ -98,4 +99,40 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
             throw new Exception(e.getMessage());
         }
     }
+
+    @Override
+    public Persona updateCliente(DTOCliente dtoCliente) throws Exception {
+        try {
+            Persona persona = this.findById(dtoCliente.getId());
+            PersonaMapper.updateClienteFromDto(dtoCliente, persona);
+            return personaRepository.save(persona);
+
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Persona updateEmpleado(Persona persona, Long id, Rol rol) throws Exception {
+        try {
+            if (persona.getId() != id){
+                throw new Exception("El id del body no es igual al seleccionado, por favor verificar los datos");
+            }
+            Persona personaOld = this.findById(id);
+            String oldPassword = personaOld.getUsuario().getContraseña();
+            persona.getUsuario().setContraseña(oldPassword);
+            if (rol == null){
+                persona.getUsuario().setRol(personaOld.getUsuario().getRol());
+            }
+
+
+            return this.update(id, persona);
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.services;
 
+import com.elbuensabor.elbuensabor.dto.DTOCliente;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.enums.Rol;
@@ -19,5 +20,9 @@ public interface PersonaService extends BaseService<Persona,Long>{
     List<Persona> findPersonaByEmail (String email) throws Exception;
 
     String signIn (String email, String password) throws Exception;
+
+    Persona updateCliente (DTOCliente dtoCliente) throws Exception;
+
+    Persona updateEmpleado (Persona persona, Long id, Rol rol) throws Exception;
 
 }

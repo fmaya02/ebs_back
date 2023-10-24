@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.controllers;
 
+import com.elbuensabor.elbuensabor.dto.DTOCliente;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.enums.Rol;
@@ -59,6 +60,26 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
     public ResponseEntity<?> signIn (@RequestParam String email, @RequestParam String password){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(email, password));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @PutMapping("/updateCliente")
+    public ResponseEntity<?> updateCliente (@RequestBody DTOCliente dtoCliente){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateCliente(dtoCliente));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @PutMapping("/updateEmpleado")
+    public ResponseEntity<?> updateEmpleado(@RequestBody Persona persona, @RequestParam(name = "id") Long id, Rol rol){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateEmpleado(persona, id, rol));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
