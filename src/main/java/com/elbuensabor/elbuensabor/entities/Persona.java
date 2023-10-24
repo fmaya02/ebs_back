@@ -19,6 +19,7 @@ public class Persona extends BaseEntity{
 
     private String telefono;
 
+    @Column(name = "email")
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)

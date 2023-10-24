@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,11 +46,21 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public Persona signUp(Persona persona, Rol rol) throws Exception {
+    public Persona signUp(Persona persona, Rol rol, String pswd1, String pswd2) throws Exception {
         try {
-            Usuario newUsuario = usuarioService.createUsuario(persona, Rol.CLIENTE);
+            List<Persona> mailcheck = personaRepository.findPersonaByEmail(persona.getEmail());
+            Usuario newUsuario = usuarioService.createUsuario(persona, rol, pswd1, pswd2, mailcheck);
             persona.setUsuario(newUsuario);
             return personaRepository.save(persona);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Persona> findPersonaByEmail(String email) throws Exception {
+        try {
+            return personaRepository.findPersonaByEmail(email);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

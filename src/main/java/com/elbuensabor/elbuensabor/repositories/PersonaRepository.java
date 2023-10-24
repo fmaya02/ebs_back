@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PersonaRepository extends BaseRepository<Persona, Long> {
 
@@ -17,4 +19,8 @@ public interface PersonaRepository extends BaseRepository<Persona, Long> {
     @Query(value = "SELECT * FROM persona p WHERE p.nombre LIKE %:nombre%",
             nativeQuery = true)
     Page<Persona> searchPersonaNombre(@Param("nombre") String nombre, Pageable pageable);
+
+    @Query(value = "SELECT * FROM persona p WHERE p.email LIKE :email",
+            nativeQuery = true)
+    List<Persona> findPersonaByEmail(@Param("email") String email);
 }
