@@ -84,14 +84,43 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
             Usuario newUsuario = Usuario.builder()
                     .fechaAlta(new Date())
                     .rol(rol)
-                    .username("" + persona.getNombre().toLowerCase() + persona.getApellido().toLowerCase() + "")
+                    .username(email)
                     .contraseña(pswd1)
                     .auth0Id(auth0counter)
+                    .hasLoggedIn(false)
                     .build();
             auth0int = auth0int + 1;
             auth0counter = "" + auth0int + "";
             usuarioRepository.save(newUsuario);
             return newUsuario;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean checkPassword(String username, String password) throws Exception {
+        try{
+            List<Usuario> usercheck = usuarioRepository.validateUser(username, password);
+            if (usercheck.size() != 1)
+                return false;
+            else
+                return true;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean firstTimeEmpleado(Usuario usr) throws Exception {
+        try{
+            if (usr.isHasLoggedIn())
+                return false;
+            else {
+                usr.setHasLoggedIn(true);
+                usuarioRepository.save(usr);
+                return true;
+            }
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

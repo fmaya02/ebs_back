@@ -18,4 +18,6 @@ public interface PersonaService extends BaseService<Persona,Long>{
 
     List<Persona> findPersonaByEmail (String email) throws Exception;
 
+    String signIn (String email, String password) throws Exception;
+
 }

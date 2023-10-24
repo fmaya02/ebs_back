@@ -35,10 +35,30 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
         }
     }
 
-    @PostMapping("/signUp")
-    public ResponseEntity<?> signUp (@RequestBody Persona persona, Rol rol, String pswd1, String pswd2){
+    @PostMapping("/signUpCliente")
+    public ResponseEntity<?> signUpCliente (@RequestBody Persona persona, String pswd1, String pswd2){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(persona,Rol.CLIENTE,pswd1,pswd2));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @PostMapping("/signUpEmpleado")
+    public ResponseEntity<?> signUpEmpleado (@RequestBody Persona persona, Rol rol, String pswd1, String pswd2){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(persona,rol,pswd1,pswd2));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @PostMapping("/signIn")
+    public ResponseEntity<?> signIn (@RequestParam String email, @RequestParam String password){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(email, password));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

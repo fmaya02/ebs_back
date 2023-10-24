@@ -41,4 +41,7 @@ public class Usuario extends BaseEntity{
     @NotNull
     @Column(name = "contraseña")
     private String contraseña;
+
+    @Column(name = "hasloggedin")
+    private boolean hasLoggedIn;
 }

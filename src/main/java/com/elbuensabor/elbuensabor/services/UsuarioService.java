@@ -15,4 +15,8 @@ public interface UsuarioService extends BaseService<Usuario, Long> {
     public Page<Usuario> searchUsuarioUsrnm(String username, Pageable pageable) throws Exception;
 
     public Usuario createUsuario(Persona persona, Rol rol, String pswd1, String pswd2, List<Persona> mailcheck) throws Exception;
+
+    public boolean checkPassword(String username, String password) throws Exception;
+
+    public boolean firstTimeEmpleado(Usuario usr) throws Exception;
 }
