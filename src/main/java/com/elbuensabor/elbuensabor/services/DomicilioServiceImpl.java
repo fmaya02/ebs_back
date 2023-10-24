@@ -15,9 +15,6 @@ public class DomicilioServiceImpl implements DomicilioService {
     public DomicilioServiceImpl(DomicilioRepository domicilioRepository) {
         this.domicilioRepository = domicilioRepository;
     }
-    public List<Domicilio> getDomiciliosByNumero(Integer numero) {
-        return domicilioRepository.findByNumero(numero);
-    }
 
     @Override
     public List<Domicilio> getAllDomicilios() {

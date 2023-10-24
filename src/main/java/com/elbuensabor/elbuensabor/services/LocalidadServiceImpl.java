@@ -17,13 +17,6 @@ public class LocalidadServiceImpl implements LocalidadService {
         this.localidadRepository = localidadRepository;
     }
 
-    public List<Localidad> getLocalidadesByDenominacion(String denominacion) {
-        return localidadRepository.findByDenominacion(denominacion);
-    }
-
-    public List<Localidad> getActiveLocalidades() {
-        return localidadRepository.findActiveLocalidades();
-    }
     @Override
     public List<Localidad> getAllLocalidades() {
         return localidadRepository.findAll();

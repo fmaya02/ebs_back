@@ -7,5 +7,5 @@ import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.DomicilioRepository;
 @Repository
 public interface DomicilioRepository extends BaseRepository<Domicilio, Long> {
-    List<Domicilio> findByNumero(Integer numero);
+
 }
