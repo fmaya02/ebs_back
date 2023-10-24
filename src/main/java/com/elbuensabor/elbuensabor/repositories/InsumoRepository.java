@@ -1,4 +1,5 @@
 package com.elbuensabor.elbuensabor.repositories;
+import com.elbuensabor.elbuensabor.dtos.DTOArticulosBajoStock;
 import com.elbuensabor.elbuensabor.entities.Insumo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,6 @@ public interface InsumoRepository extends BaseRepository<Insumo, Long> {
             countQuery = "SELECT COUNT(*) FROM DETALLE_PEDIDO",
             nativeQuery = true
     )
-    public Page<Insumo> findLowStock(Pageable pageable);
+    public Page<DTOArticulosBajoStock> findLowStock(Pageable pageable);
 
 }

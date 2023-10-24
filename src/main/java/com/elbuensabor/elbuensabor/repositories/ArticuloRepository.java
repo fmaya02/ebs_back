@@ -14,7 +14,6 @@ public interface ArticuloRepository extends BaseRepository<Articulo, Long>{
     @Query(value = "SELECT * " +
             "FROM ARTICULO a " +
             "WHERE DENOMINACION LIKE %:filtro% AND FECHA_BAJA IS NULL",
-            countQuery = "SELECT COUNT(*) FROM ARTICULO",
             nativeQuery = true
     )
     Page<Articulo> findByName(@Param("filtro") String filtro, Pageable pageable);

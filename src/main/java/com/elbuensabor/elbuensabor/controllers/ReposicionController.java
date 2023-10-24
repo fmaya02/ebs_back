@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "ebs/reposicion")
+@RequestMapping(path = "/ebs/reposicion")
 public class ReposicionController extends BaseControllerImpl<Reposicion, ReposicionServiceImpl> {
 }

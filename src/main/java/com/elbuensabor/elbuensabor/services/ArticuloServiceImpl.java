@@ -18,9 +18,9 @@ import java.util.Date;
 @Service
 public class ArticuloServiceImpl extends BaseServiceImpl<Articulo, Long> implements ArticuloService {
     @Autowired
-    private DetallePedidoServiceImpl detallePedidoServiceImpl;
+    protected DetallePedidoServiceImpl detallePedidoServiceImpl;
     @Autowired
-    private ArticuloRepository articuloRepository;
+    protected ArticuloRepository articuloRepository;
 
     public ArticuloServiceImpl(ArticuloRepository articuloRepository, BaseRepository<Articulo, Long> baseRepository) {
         super(baseRepository);
@@ -43,7 +43,7 @@ public class ArticuloServiceImpl extends BaseServiceImpl<Articulo, Long> impleme
     @Transactional
     public Page<DTOArticulosMasVendidos> findMostSold(Date fecha1, Date fecha2, Pageable pageable) throws Exception{
         try {
-            Page<DTOArticulosMasVendidos> entities = detallePedidoServiceImpl.findMostSold(fecha1, fecha2, pageable);
+            Page<DTOArticulosMasVendidos> entities = this.detallePedidoServiceImpl.findMostSold(pageable, fecha1, fecha2);
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

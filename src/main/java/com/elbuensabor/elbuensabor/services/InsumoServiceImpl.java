@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.services;
 
+import com.elbuensabor.elbuensabor.dtos.DTOArticulosBajoStock;
 import com.elbuensabor.elbuensabor.entities.Insumo;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.InsumoRepository;
@@ -22,9 +23,9 @@ public class InsumoServiceImpl extends BaseServiceImpl<Insumo, Long> implements 
 
     @Override
     @Transactional
-    public Page<Insumo> findLowStock(Pageable pageable) throws Exception {
+    public Page<DTOArticulosBajoStock> findLowStock(Pageable pageable) throws Exception {
         try {
-            Page<Insumo> entities = this.insumoRepository.findLowStock(pageable);
+            Page<DTOArticulosBajoStock> entities = this.insumoRepository.findLowStock(pageable);
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

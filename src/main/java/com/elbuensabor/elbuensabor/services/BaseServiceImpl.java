@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public abstract class BaseServiceImpl<E extends BaseEntity, ID extends Serializable> implements BaseService<E, ID> {
+    @Autowired
     protected BaseRepository<E,ID> baseRepository;
 
     public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
