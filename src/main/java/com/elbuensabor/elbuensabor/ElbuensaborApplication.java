@@ -43,7 +43,7 @@ public class ElbuensaborApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository ) {
+	CommandLineRunner init(PersonaRepository personaRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository ) {
 		return args -> {
 //			Localidad localidad1 = Localidad.builder()
 //					.denominacion("Kaer Morhen")
@@ -67,7 +67,7 @@ public class ElbuensaborApplication {
 //					.domicilios(new ArrayList<Domicilio>())
 //					.build();
 //			persona1.addDomicilio(domicilio1);
-//			clienteRepository.save(persona1);
+//			personaRepository.save(persona1);
 //
 //			Insumo insumo1=Insumo.builder()
 //					.denominacion("Harina 0000")

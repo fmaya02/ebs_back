@@ -118,6 +118,15 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
         }
     }
 
+    @Override
+    public List<Pedido> getPedidoByCliente(Long id) throws Exception {
+        try {
+            return pedidoRepository.getAllByCliente(id);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
     private BigDecimal descontarStock(List<DetallePedido> detallesPedido){
         BigDecimal totalCosto=new BigDecimal(0);
         for(DetallePedido detallePedido:detallesPedido){

@@ -24,7 +24,4 @@ public interface PersonaRepository extends BaseRepository<Persona, Long> {
     @Query(value = "SELECT P.* FROM PERSONA P INNER JOIN USUARIO U ON P.USUARIO_ID = U.Id WHERE U.ROL != 'CLIENTE'",
             nativeQuery = true)
     List<Persona> getAllEmpleados();
-
-    @
-    int getCantPedidos();
 }

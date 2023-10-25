@@ -3,6 +3,7 @@ package com.elbuensabor.elbuensabor.services;
 import com.elbuensabor.elbuensabor.dtos.DTOCliente;
 import com.elbuensabor.elbuensabor.dtos.DTOClienteRanking;
 import com.elbuensabor.elbuensabor.dtos.DTOEmpleado;
+import com.elbuensabor.elbuensabor.entities.Domicilio;
 import com.elbuensabor.elbuensabor.entities.Pedido;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
@@ -27,8 +28,11 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
-    //@Autowired
-    //private PedidoServiceImpl pedidoService;
+    @Autowired
+    private PedidoServiceImpl pedidoService;
+
+    @Autowired
+    private DomicilioServiceImpl domicilioService;
 
     public PersonaServiceImpl(BaseRepository<Persona,Long> baseRepository, PersonaRepository personaRepository){
         super(baseRepository);
@@ -40,13 +44,13 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
         try {
             List<Persona> mailcheck = personaRepository.findPersonaByEmail(persona.getEmail());
             Usuario newUsuario = usuarioService.createUsuario(persona, rol, pswd1, pswd2, mailcheck);
-            //Domicilio dom = domicilioService.save(persona.getDomiclios.get(0));
+            Domicilio dom = domicilioService.save(persona.getDomicilios().get(0));
             persona.setUsuario(newUsuario);
             persona.setFechaBaja(null);
             persona.setFechaModificacion(new Date());
             persona.setFechaAlta(new Date());
             persona.setDomicilios(new ArrayList<>());
-            //persona.addDomicilio(dom);
+            persona.addDomicilio(dom);
             return personaRepository.save(persona);
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -244,11 +248,11 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
                 DTOClienteRanking dtoClienteRanking = new DTOClienteRanking();
                 dtoClienteRanking.setNombre(persona.getNombre());
                 dtoClienteRanking.setApellido(persona.getApellido());
-                //List<Pedido> pedidos = pedidoService.getPedidos(persona.getId());
+                List<Pedido> pedidos = pedidoService.getPedidoByCliente(persona.getId());
                 dtoClienteRanking.setCantPedidos(pedidos.size());
                 BigDecimal importeTotal= new BigDecimal(0);
                 for (Pedido pedido : pedidos){
-                    importeTotal = importeTotal.add(pedido.getTotal);
+                    importeTotal = importeTotal.add(pedido.getTotal());
                 }
                 dtoClienteRanking.setImporteTotal(importeTotal);
                 dtos.add(dtoClienteRanking);
