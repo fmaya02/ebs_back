@@ -6,6 +6,7 @@ import jakarta.persistence.FieldResult;
 import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @SqlResultSetMapping(
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Data
 public class DTOArticulosBajoStock {
     private String denominacion;
     private int stockMinimo;

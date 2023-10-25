@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ArticuloServiceTest {
                 .descripcion("Que ricoo")
                 .precioVenta(new BigDecimal(4000))
                 .fechaBaja(null)
-                .urlImagen("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                .urlImagen("https://www.youtube.com/watch?v=KWZ-ytC9Uyk")
                 .build();
 
         List<Articulo> listaTest = new ArrayList<>();
@@ -57,11 +58,11 @@ public class ArticuloServiceTest {
     public void findMostSoldTest() throws Exception {
         DTOArticulosMasVendidos dto1 = DTOArticulosMasVendidos.builder()
                 .denominacionArticulo("Empanadas de carne")
-                .cantidad(3)
+                .cantidad(Long.valueOf(3))
                 .build();
         DTOArticulosMasVendidos dto2 = DTOArticulosMasVendidos.builder()
                 .denominacionArticulo("Empanadas de jamon y queso")
-                .cantidad(8)
+                .cantidad(Long.valueOf(8))
                 .build();
 
         List<DTOArticulosMasVendidos> listaDto = new ArrayList<>();
@@ -71,12 +72,19 @@ public class ArticuloServiceTest {
         Pageable pageable = PageRequest.of(0,2);
         Page<DTOArticulosMasVendidos> pageTest = new PageImpl<>(listaDto, pageable, 2);
 
-        Date fechaInicio = new Date();
-        Date fechaFin = new Date();
+        String fechaInicioString = "2003-01-01 15:30:00";
+        String fechaFinString = "2030-01-20 15:30:30";
+        String fechaPedidoString = "2023-01-01 00:00:00";
 
-        when(detallePedidoServiceImpl.findMostSold(pageable, fechaInicio, fechaFin)).thenReturn(pageTest);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        assertEquals(pageTest.getContent(), articuloService.findMostSold(fechaInicio, fechaFin, pageable).getContent());
+        Date fechaInicio = dateFormat.parse(fechaInicioString);
+        Date fechaFin = dateFormat.parse(fechaFinString);
+        Date fechaPedido = dateFormat.parse(fechaPedidoString);
+
+        when(detallePedidoServiceImpl.findMostSold(0, 2, fechaInicio, fechaFin)).thenReturn(listaDto);
+
+        assertEquals(listaDto, articuloService.findMostSold(fechaInicioString, fechaFinString, 0, 2));
 
 
     }

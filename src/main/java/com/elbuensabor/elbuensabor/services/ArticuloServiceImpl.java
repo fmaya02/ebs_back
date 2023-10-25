@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +42,14 @@ public class ArticuloServiceImpl extends BaseServiceImpl<Articulo, Long> impleme
     //Productos más pedidos, entre fechas
     @Override
     @Transactional
-    public Page<DTOArticulosMasVendidos> findMostSold(Date fecha1, Date fecha2, Pageable pageable) throws Exception{
+    public List<DTOArticulosMasVendidos> findMostSold(String fecha1, String fecha2, int page, int size) throws Exception{
         try {
-            Page<DTOArticulosMasVendidos> entities = this.detallePedidoServiceImpl.findMostSold(pageable, fecha1, fecha2);
-            return entities;
+            //convertir la fecha de String a Date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date fechaInicio = dateFormat.parse(fecha1);
+            Date fechaFin = dateFormat.parse(fecha2);
+            /*Page<DTOArticulosMasVendidos> entities = this.detallePedidoServiceImpl.findMostSold(page, size, fechaInicio, fechaFin);*/
+            return this.detallePedidoServiceImpl.findMostSold(page, size, fechaInicio, fechaFin);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

@@ -9,8 +9,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 @Entity
-@Table(name="articulo_rubro")
-@Data
+@Table(name="rubro_articulo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

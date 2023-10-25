@@ -6,9 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
+import java.util.List;
 
 public interface DetallePedidoService extends BaseService<DetallePedido, Long> {
 
-    public Page<DTOArticulosMasVendidos> findMostSold(Pageable pageable, Date date1, Date date2) throws Exception;
+    public List<DTOArticulosMasVendidos> findMostSold(int page, int size, Date date1, Date date2) throws Exception;
 
 }

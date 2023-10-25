@@ -5,8 +5,9 @@ import jakarta.persistence.FieldResult;
 import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-@SqlResultSetMapping(
+/*@SqlResultSetMapping(
         name = "productosMasVendidosMapping",
         entities = {
                 @EntityResult(
@@ -20,16 +21,18 @@ import lombok.NoArgsConstructor;
                         }
                 )
         }
-)
+)*/
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Data
 public class DTOArticulosMasVendidos {
-    private int cantidad;
-    private int articuloId;
+    private Long cantidad;
+    private long articuloId;
     private String denominacionArticulo;
     private String urlImagen;
     private String denominacionRubro;
+
 }
 
 

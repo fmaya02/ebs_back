@@ -7,10 +7,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.elbuensabor.elbuensabor.repositories.DetallePedidoRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class DetallePedidoServiceImpl extends BaseServiceImpl<DetallePedido, Long> implements DetallePedidoService {
@@ -24,9 +27,11 @@ public class DetallePedidoServiceImpl extends BaseServiceImpl<DetallePedido, Lon
     }
     @Override
     @Transactional
-    public Page<DTOArticulosMasVendidos> findMostSold(Pageable pageable, Date date1, Date date2) throws Exception{
+    public List<DTOArticulosMasVendidos> findMostSold(int page, int size, Date date1, Date date2) throws Exception{
         try {
-            Page<DTOArticulosMasVendidos> entities = this.detallePedidoRepository.findMostSold(date1, date2, pageable);
+            List<DTOArticulosMasVendidos> entities = this.detallePedidoRepository.findMostSold(date1, date2);
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DTOArticulosMasVendidos> returnedPage = new PageImpl<>(entities, pageable, entities.size());
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
