@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public interface FacturaService extends BaseService<Factura,Long> {
-Page<Factura> searchFacturaPedido (Long pedido_id, Pageable pageable) throws  Exception;
+public Page<Factura> searchFacturaPedido (Long pedidoId, Pageable pageable) throws  Exception;
 public Factura createFactura (Pedido pedido, FormaPago formaPago, int nro1 ) throws Exception;
 
 }

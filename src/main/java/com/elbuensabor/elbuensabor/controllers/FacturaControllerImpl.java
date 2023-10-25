@@ -16,10 +16,12 @@ import java.math.BigDecimal;
 @CrossOrigin("*")
 @RequestMapping(path = "ebs/Factura")
 public class FacturaControllerImpl extends BaseControllerImpl<Factura, FacturaServiceImpl> {
+
+
 @GetMapping("/SearchFacturapedido")
-    public ResponseEntity<?> searchFacturaPedido (@RequestParam Long pedido_id, Pageable pageable){
+    public ResponseEntity<?> searchFacturaPedido (@RequestParam Long pedidoId, Pageable pageable){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchFacturaPedido(pedido_id, pageable));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchFacturaPedido(pedidoId, pageable));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

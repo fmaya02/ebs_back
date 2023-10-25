@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FacturaRepository extends BaseRepository<Factura, Long> {
 
-    @Query(value = "SELECT * FROM factura f WHERE pedido LIKE %:filtro%",
-    nativeQuery = true)
-    Page<Factura> searchFacturaPedido (@Param("filtro") Long filtro, Pageable pageable);
+
+    @Query(value = "SELECT * FROM factura WHERE pedido_id = :pedidoid",
+        nativeQuery = true)
+    Page<Factura> searchFacturaPedido(@Param("pedidoid") Long pedidoId, Pageable pageable);
 }
