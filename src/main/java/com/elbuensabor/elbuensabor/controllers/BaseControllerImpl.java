@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.controllers;
 
 import com.elbuensabor.elbuensabor.ElbuensaborApplication;
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
+import com.elbuensabor.elbuensabor.services.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
