@@ -3,6 +3,7 @@ package com.elbuensabor.elbuensabor.entities;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Usuario extends BaseEntity{
     @NotNull
     @Column(name = "auth0_id", nullable = false, unique = true)

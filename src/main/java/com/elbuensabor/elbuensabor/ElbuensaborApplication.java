@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor;
 
 import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
+import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ElbuensaborApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository) {
+	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository ) {
 		return args -> {
 
 			Localidad localidad1 = Localidad.builder()
@@ -97,6 +98,22 @@ public class ElbuensaborApplication {
 					.build();
 			pedidoRepository.save(pedido1);
 
+			Factura factura1 = Factura.builder()
+					.fechaComprobante(new Date())
+					.nro(1)
+					.total(pedido1.getTotal())
+					.fechaFacturacion(new Date())
+					.formaPago(FormaPago.EFECTIVO)
+					.pedido(pedido1)
+					.build();
+			facturaRepository.save(factura1);
+			NotaCredito newNotaCredito = NotaCredito.builder()
+					.factura(factura1)
+					.fechaComprobante(new Date())
+					.nro(2)
+					.total(factura1.getPedido().getTotal())
+					.build();
+			notaCreditoRepository.save(newNotaCredito);
 			System.out.println("Corriendo API\n");
 
 		};
