@@ -42,3 +42,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jar {
+	manifest {
+		attributes 'ElbuensaborApplication': 'com.elbuensabor.elbuensabor.ElbuensaborApplication'
+	}
+}
