@@ -100,7 +100,8 @@ public class ElbuensaborApplication {
 			articuloInsumos.add(articuloInsumo2);
 
 			Articulo articulo1 = Articulo.builder()
-					.costo(new BigDecimal(30000))
+					.costo(new BigDecimal(800))
+					.tiempoEstimadoCocina(20)
 					.fechaAlta(new Date())
 					.denominacion("Pizza con piña")
 					.descripcion("que asco")

@@ -4,6 +4,7 @@ import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
+import com.elbuensabor.elbuensabor.repositories.InsumoRepository;
 import com.elbuensabor.elbuensabor.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,9 @@ import java.util.Optional;
 public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private InsumoRepository insumoRepository;
     public PedidoServiceImpl(BaseRepository<Pedido, Long> baseRepository) {
         super(baseRepository);
         this.baseRepository=baseRepository;
@@ -121,12 +125,15 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
         BigDecimal totalCosto=new BigDecimal(0);
         for(DetallePedido detallePedido:detallesPedido){
             Articulo articulo=detallePedido.getArticulo();
-            totalCosto.add(articulo.getCosto().multiply(new BigDecimal(detallePedido.getCantidad())));
+            BigDecimal costo=articulo.getCosto().multiply(new BigDecimal(detallePedido.getCantidad()));
+            totalCosto=totalCosto.add(costo);
             List<ArticuloInsumo> articuloInsumos=articulo.getArticuloInsumos();
             for(ArticuloInsumo articuloInsumo:articuloInsumos){
                 Insumo insumo=articuloInsumo.getInsumo();
                 BigDecimal stockActual=insumo.getStockActual();
-                insumo.setStockActual(stockActual.add(articuloInsumo.getCantidad().multiply(new BigDecimal(-1))));
+                BigDecimal cantidadPedido=articuloInsumo.getCantidad().multiply(new BigDecimal(-1));
+                insumo.setStockActual(stockActual.add(cantidadPedido));
+                insumoRepository.save(insumo);
             }
         }
         return totalCosto;
