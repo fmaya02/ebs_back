@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,7 +80,6 @@ public class Pedido extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "pedido_id")
     List<DetallePedido> pedidoDetalles=new ArrayList<>();
-
     public void setPedidoDetalles(List<DetallePedido> detallesPedido){
         this.pedidoDetalles=detallesPedido;
     }

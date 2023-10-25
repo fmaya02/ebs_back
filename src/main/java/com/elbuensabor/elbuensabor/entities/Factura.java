@@ -46,7 +46,6 @@ public class Factura extends Comprobante{
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-
     public void setFacturaDetalles(List<DetalleComprobante> detalles){
         this.facturaDetalles=detalles;
     }

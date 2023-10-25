@@ -38,6 +38,7 @@ public class ElbuensaborApplication {
 
 	@Bean
 	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository ) {
+
 		return args -> {
 
 			Localidad localidad1 = Localidad.builder()

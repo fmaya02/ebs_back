@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @SuperBuilder(toBuilder=true)
 public class DetallePedido extends BaseEntity{
-
     @NotNull
     private Integer cantidad;
 
