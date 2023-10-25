@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +21,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Pedido extends BaseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Agrega la propiedad cantidad
+    private Integer cantidad;
+
     @NotNull
     @Column(name = "fecha_pedido")
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,6 +85,10 @@ public class Pedido extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "pedido_id")
     List<DetallePedido> pedidoDetalles=new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "factura_id")
+    private Factura factura;
 
     public void setPedidoDetalles(List<DetallePedido> detallesPedido){
         this.pedidoDetalles=detallesPedido;
