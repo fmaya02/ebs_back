@@ -60,9 +60,10 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
             calendar.add(Calendar.MINUTE, tiempoTotalEsperado);
             //setear hora estimada finalizacion
             pedido.setHoraEstimadaFinalizacion(calendar.getTime());
-            pedido=save(pedido);
+
             //descontar stock y setear totalCosto
             pedido.setTotalCosto(descontarStock(pedido.getPedidoDetalles()));
+            pedido=save(pedido);
             return pedido;
         }catch (Exception e){
             throw new Exception(e.getMessage());
