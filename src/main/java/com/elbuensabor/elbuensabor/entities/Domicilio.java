@@ -2,13 +2,14 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 @Table(name="domicilio")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Domicilio extends BaseEntity{
     @NotNull
     @Column(length = 500)
