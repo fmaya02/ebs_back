@@ -54,7 +54,7 @@ public class Articulo extends BaseEntity{
     @JoinColumn(name="articulo_rubro_id")
     private RubroArticulo articuloRubro;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "articulo_id")
     private List<ArticuloInsumo> articuloInsumos=new ArrayList<>();
 

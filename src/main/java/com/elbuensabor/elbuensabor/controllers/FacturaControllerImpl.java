@@ -33,6 +33,16 @@ public class FacturaControllerImpl extends BaseControllerImpl<Factura, FacturaSe
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
     }
-}
+
+    @GetMapping("/MovimientosMonetarios")
+    public ResponseEntity<?> getMovimientosMonetarios (@RequestParam String fechaDesde, @RequestParam String fechaHasta){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getFacturasByFecha(fechaDesde, fechaHasta));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
 }

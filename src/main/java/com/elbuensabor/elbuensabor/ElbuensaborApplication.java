@@ -121,6 +121,8 @@ public class ElbuensaborApplication {
 
 			Pedido pedido1 = Pedido.builder()
 					.nroPedido(456465L)
+					.total(new BigDecimal(5000))
+					.totalCosto(new BigDecimal(3500))
 					.fechaPedido(new Date())
 					.persona(persona1)
 					.domicilioEntrega(domicilio1)
