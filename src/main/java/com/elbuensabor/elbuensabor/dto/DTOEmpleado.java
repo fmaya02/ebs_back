@@ -1,19 +1,17 @@
 package com.elbuensabor.elbuensabor.dto;
 
 import com.elbuensabor.elbuensabor.enums.EstadoPersona;
+import com.elbuensabor.elbuensabor.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DTOCliente {
-
+public class DTOEmpleado {
     private String nombre;
 
     private String apellido;
@@ -24,4 +22,5 @@ public class DTOCliente {
 
     private EstadoPersona estadoPersona;
 
+    private Rol rol;
 }

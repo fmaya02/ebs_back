@@ -12,15 +12,15 @@ import java.util.List;
 @Repository
 public interface PersonaRepository extends BaseRepository<Persona, Long> {
 
-    @Query(value = "SELECT * FROM persona p WHERE p.apellido LIKE %:apellido%",
-    nativeQuery = true)
-    Page<Persona> searchPersonaApellido(@Param("apellido") String apellido, Pageable pageable);
-
-    @Query(value = "SELECT * FROM persona p WHERE p.nombre LIKE %:nombre%",
-            nativeQuery = true)
-    Page<Persona> searchPersonaNombre(@Param("nombre") String nombre, Pageable pageable);
-
     @Query(value = "SELECT * FROM persona p WHERE p.email LIKE :email",
             nativeQuery = true)
     List<Persona> findPersonaByEmail(@Param("email") String email);
+
+    @Query(value = "SELECT P.* FROM PERSONA P INNER JOIN USUARIO U ON P.USUARIO_ID = U.Id WHERE U.ROL = 'CLIENTE'",
+            nativeQuery = true)
+    List<Persona> getAllClientes();
+
+    @Query(value = "SELECT P.* FROM PERSONA P INNER JOIN USUARIO U ON P.USUARIO_ID = U.Id WHERE U.ROL != 'CLIENTE'",
+            nativeQuery = true)
+    List<Persona> getAllEmpleados();
 }

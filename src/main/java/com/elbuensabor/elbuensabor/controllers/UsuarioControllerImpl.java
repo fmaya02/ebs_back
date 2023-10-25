@@ -12,20 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "ebs/usuarios")
 public class UsuarioControllerImpl extends BaseControllerImpl<Usuario, UsuarioServiceImpl> {
 
-    @GetMapping("/searchUsuarioRol")
-    public ResponseEntity<?> searchUsuarioRol(@RequestParam String rol, Pageable pageable){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchUsuarioRol(rol, pageable));
-        }catch (Exception e){
-            String strErr = e.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
-        }
-    }
-
-    @GetMapping("/searchUsuarioUsrnm")
-    public ResponseEntity<?> searchUsuarioUsrnm(@RequestParam String username, Pageable pageable){
+    @PostMapping("/signIn")
+    public ResponseEntity<?> signIn (@RequestParam String username, @RequestParam String password){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchUsuarioUsrnm(username, pageable));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(username, password));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

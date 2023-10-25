@@ -12,12 +12,11 @@ import java.util.List;
 @Repository
 public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
 
-    @Query(value = "SELECT u FROM Usuario u WHERE u.rol LIKE :rol")
-    Page<Usuario> searchUsuarioRol(@Param("rol") String rol, Pageable pageable);
-
-    @Query(value = "SELECT u FROM Usuario u WHERE u.username LIKE %:username%")
-    Page<Usuario> searchUsuarioUsrnm(@Param("username") String username, Pageable pageable);
-
-    @Query(value = "SELECT u FROM Usuario u WHERE u.username = :username AND u.contraseña = :password")
+    @Query(value = "SELECT * FROM usuario u WHERE u.username = :username AND u.contraseña = :password",
+            nativeQuery = true)
     List<Usuario> validateUser(@Param("username") String username, @Param("password") String password);
+
+    @Query(value = "SELECT * FROM usuario u WHERE u.username = :username",
+            nativeQuery = true)
+    List<Usuario> findUsrByUsrname(@Param("username") String username);
 }

@@ -36,6 +36,7 @@ public class Usuario extends BaseEntity{
     private Date fechaBaja;
 
     @Column(name = "rol")
+    @Enumerated(value = EnumType.STRING)
     private Rol rol;
 
     @NotNull

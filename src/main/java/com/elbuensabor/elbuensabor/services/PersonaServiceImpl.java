@@ -1,17 +1,17 @@
 package com.elbuensabor.elbuensabor.services;
 
 import com.elbuensabor.elbuensabor.dto.DTOCliente;
-import com.elbuensabor.elbuensabor.mappers.PersonaMapper;
+import com.elbuensabor.elbuensabor.dto.DTOEmpleado;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
+import com.elbuensabor.elbuensabor.enums.EstadoPersona;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.PersonaRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +19,6 @@ import java.util.List;
 public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
-
-    //todo poner el personamapper aca para poder hacer los updates de los campos necesarios
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
@@ -30,32 +28,17 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public Page<Persona> searchPersonaApellido(String apellido, Pageable pageable) throws Exception {
-        try {
-            return personaRepository.searchPersonaApellido(apellido, pageable);
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
-    public Page<Persona> searchPersonaNombre(String nombre, Pageable pageable) throws Exception {
-        try {
-            return personaRepository.searchPersonaNombre(nombre, pageable);
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
     public Persona signUp(Persona persona, Rol rol, String pswd1, String pswd2) throws Exception {
         try {
             List<Persona> mailcheck = personaRepository.findPersonaByEmail(persona.getEmail());
             Usuario newUsuario = usuarioService.createUsuario(persona, rol, pswd1, pswd2, mailcheck);
+            //Domicilio dom = domicilioService.save(persona.getDomiclios.get(0));
             persona.setUsuario(newUsuario);
             persona.setFechaBaja(null);
             persona.setFechaModificacion(new Date());
             persona.setFechaAlta(new Date());
+            persona.setDomicilios(new ArrayList<>());
+            //persona.addDomicilio(dom);
             return personaRepository.save(persona);
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -72,67 +55,176 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public String signIn(String email, String password) throws Exception {
+    public List<DTOCliente> getAllClientes() throws Exception {
         try {
-            List<Persona> personas = this.findPersonaByEmail(email);
-            if (personas.isEmpty()){
-                throw new Exception("No existe usuario con este mail, por favor verifique los datos");
-            }
-            if (personas.size()>1){
-                throw new Exception("Ha ocurrido un error, por favor intente más tarde");
-            }
-            if ( !(usuarioService.checkPassword(email, password) )) {
-                throw new Exception("La contraseña ingresada es incorrecta, intente nuevamente");
-            }
-            if (personas.get(0).getFechaBaja()== null) {
-                String result ="El usuario " + email + " se ha logeado correctamente. ";
-
-                if ( usuarioService.firstTimeEmpleado(personas.get(0).getUsuario()) && !(personas.get(0).getUsuario().getRol().equals(Rol.CLIENTE)) ){
-                    result = result + "EL EMPLEADO DEBE CAMBIAR LA CONTRASEÑA";
+            List<Persona> personas = personaRepository.getAllClientes();
+            List<DTOCliente> dtos = new ArrayList<>();
+            ModelMapper modelMapper = new ModelMapper();
+            for (Persona persona : personas){
+                DTOCliente dtoCliente = modelMapper.map(persona, DTOCliente.class);
+                if (persona.getFechaBaja()==null){
+                    dtoCliente.setEstadoPersona(EstadoPersona.ALTA);
+                } else {
+                    dtoCliente.setEstadoPersona(EstadoPersona.BAJA);
                 }
+                dtos.add(dtoCliente);
+            }
+            return dtos;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 
-                return result;
+    @Override
+    public List<DTOEmpleado> getAllEmpleados() throws Exception {
+        try {
+            List<Persona> personas = personaRepository.getAllEmpleados();
+            List<DTOEmpleado> dtos = new ArrayList<>();
+            ModelMapper modelMapper = new ModelMapper();
+            for (Persona persona : personas){
+                DTOEmpleado dtoEmpleado = modelMapper.map(persona, DTOEmpleado.class);
+                if (persona.getFechaBaja()==null){
+                    dtoEmpleado.setEstadoPersona(EstadoPersona.ALTA);
+                } else {
+                    dtoEmpleado.setEstadoPersona(EstadoPersona.BAJA);
+                }
+                dtoEmpleado.setRol(persona.getUsuario().getRol());
+                dtos.add(dtoEmpleado);
+            }
+            return dtos;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public DTOCliente getCliente(Long id) throws Exception {
+        try {
+            Persona persona = this.findById(id);
+            ModelMapper modelMapper = new ModelMapper();
+            DTOCliente dtoCliente = modelMapper.map(persona, DTOCliente.class);
+            if (persona.getFechaBaja()==null){
+                dtoCliente.setEstadoPersona(EstadoPersona.ALTA);
+            } else {
+                dtoCliente.setEstadoPersona(EstadoPersona.BAJA);
+            }
+            if (persona.getUsuario().getRol()!=Rol.CLIENTE){
+                throw new Exception("El id ingresado no corresponde con un cliente, verifique los datos");
+            }
+            return dtoCliente;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public DTOEmpleado getEmpleado(Long id) throws Exception {
+        try {
+            Persona persona = this.findById(id);
+            ModelMapper modelMapper = new ModelMapper();
+            DTOEmpleado dtoEmpleado = modelMapper.map(persona, DTOEmpleado.class);
+            if (persona.getFechaBaja()==null){
+                dtoEmpleado.setEstadoPersona(EstadoPersona.ALTA);
+            } else {
+                dtoEmpleado.setEstadoPersona(EstadoPersona.BAJA);
+            }
+            if (persona.getUsuario().getRol()==Rol.CLIENTE){
+                throw new Exception("El id ingresado no corresponde con un Empleado, verifique los datos");
             }else {
-                return "Su usuario está dado de baja. Por favor consulte con el administrador";
+                dtoEmpleado.setRol(persona.getUsuario().getRol());
             }
+            return dtoEmpleado;
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public Persona updateCliente(DTOCliente dtoCliente) throws Exception {
+    public DTOCliente updateCliente(DTOCliente dtoCliente, Long id) throws Exception {
         try {
-            Persona persona = this.findById(dtoCliente.getId());
-            PersonaMapper.updateClienteFromDto(dtoCliente, persona);
-            return personaRepository.save(persona);
-
-
+            //para que esto funcione bien, el dto debe tener valores null en lo que no se quiera actualizar de la entidad
+            //si esto no es así, se pisará lo que sea que valgan esas propiedades en el json en la entidad a actualizar
+            ModelMapper modelMapper = new ModelMapper();
+            Persona persona = findById(id);
+            Persona personaIntermedia = modelMapper.map(dtoCliente, Persona.class);
+            if (personaIntermedia.getNombre()!=null){
+                persona.setNombre(personaIntermedia.getNombre());
+            }
+            if (personaIntermedia.getApellido()!=null){
+                persona.setApellido(personaIntermedia.getApellido());
+            }
+            if (personaIntermedia.getTelefono()!=null){
+                persona.setTelefono(personaIntermedia.getTelefono());
+            }
+            if (personaIntermedia.getEmail()!=null){
+                persona.setEmail(personaIntermedia.getEmail());
+            }
+            if (dtoCliente.getEstadoPersona()==EstadoPersona.ALTA){
+                persona.setFechaBaja(null);
+                persona.getUsuario().setFechaBaja(null);
+            }
+            if (dtoCliente.getEstadoPersona()==EstadoPersona.BAJA){
+                persona.setFechaBaja(new Date());
+                persona.getUsuario().setFechaBaja(new Date());
+            }
+            usuarioService.save(persona.getUsuario());
+            Persona personaPersistida = personaRepository.save(persona);
+            DTOCliente dtoRetorno = modelMapper.map(personaPersistida, DTOCliente.class);
+            if (personaPersistida.getFechaBaja()==null){
+                dtoRetorno.setEstadoPersona(EstadoPersona.ALTA);
+            } else {
+                dtoRetorno.setEstadoPersona(EstadoPersona.BAJA);
+            }
+            return dtoRetorno;
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public Persona updateEmpleado(Persona persona, Long id, Rol rol) throws Exception {
+    public DTOEmpleado updateEmpleado(DTOEmpleado dtoEmpleado, Long id) throws Exception {
         try {
-            if (persona.getId() != id){
-                throw new Exception("El id del body no es igual al seleccionado, por favor verificar los datos");
+            //para que esto funcione bien, el dto debe tener valores null en lo que no se quiera actualizar de la entidad
+            //si esto no es así, se pisará lo que sea que valgan esas propiedades en el json en la entidad a actualizar
+            ModelMapper modelMapper = new ModelMapper();
+            Persona persona = findById(id);
+            Persona personaIntermedia = modelMapper.map(dtoEmpleado, Persona.class);
+            if (personaIntermedia.getNombre()!=null){
+                persona.setNombre(personaIntermedia.getNombre());
             }
-            Persona personaOld = this.findById(id);
-            String oldPassword = personaOld.getUsuario().getContraseña();
-            persona.getUsuario().setContraseña(oldPassword);
-            if (rol == null){
-                persona.getUsuario().setRol(personaOld.getUsuario().getRol());
+            if (personaIntermedia.getApellido()!=null){
+                persona.setApellido(personaIntermedia.getApellido());
             }
-
-
-            return this.update(id, persona);
-
+            if (personaIntermedia.getTelefono()!=null){
+                persona.setTelefono(personaIntermedia.getTelefono());
+            }
+            if (personaIntermedia.getEmail()!=null){
+                persona.setEmail(personaIntermedia.getEmail());
+            }
+            if (dtoEmpleado.getEstadoPersona()==EstadoPersona.ALTA){
+                persona.setFechaBaja(null);
+                persona.getUsuario().setFechaBaja(null);
+            }
+            if (dtoEmpleado.getEstadoPersona()==EstadoPersona.BAJA){
+                persona.setFechaBaja(new Date());
+                persona.getUsuario().setFechaBaja(new Date());
+            }
+            if (dtoEmpleado.getRol()!=null){
+                persona.getUsuario().setRol(dtoEmpleado.getRol());
+            }
+            usuarioService.save(persona.getUsuario());
+            Persona personaPersistida = personaRepository.save(persona);
+            DTOEmpleado dtoRetorno = modelMapper.map(personaPersistida, DTOEmpleado.class);
+            if (personaPersistida.getFechaBaja()==null){
+                dtoRetorno.setEstadoPersona(EstadoPersona.ALTA);
+            } else {
+                dtoRetorno.setEstadoPersona(EstadoPersona.BAJA);
+            }
+            dtoRetorno.setRol(personaPersistida.getUsuario().getRol());
+            return dtoRetorno;
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
-
 
 }

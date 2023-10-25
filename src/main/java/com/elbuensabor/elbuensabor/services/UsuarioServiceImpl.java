@@ -6,8 +6,6 @@ import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,30 +34,8 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
     }
 
     @Override
-    public Page<Usuario> searchUsuarioRol(String rol, Pageable pageable) throws Exception {
-        try{
-            return usuarioRepository.searchUsuarioRol(rol, pageable);
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
-    public Page<Usuario> searchUsuarioUsrnm(String username, Pageable pageable) throws Exception {
-        try{
-            return usuarioRepository.searchUsuarioUsrnm(username, pageable);
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
     public Usuario createUsuario(Persona persona, Rol rol, String pswd1, String pswd2, List<Persona> mailcheck) throws Exception {
         try {
-            if (rol.equals(Rol.ADMINISTRADOR)) {
-                throw new Exception("No puede crearse el usuario con el rol seleccionado");
-            }
-
             if (!pswd1.equals(pswd2)){
                 throw new Exception("La contraseña no coincide en ambos campos");
             }
@@ -83,6 +59,8 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
 
             Usuario newUsuario = Usuario.builder()
                     .fechaAlta(new Date())
+                    .fechaModificacion(null)
+                    .fechaBaja(null)
                     .rol(rol)
                     .username(email)
                     .contraseña(pswd1)
@@ -93,6 +71,35 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
             auth0counter = "" + auth0int + "";
             usuarioRepository.save(newUsuario);
             return newUsuario;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public String signIn(String username, String password) throws Exception {
+        try {
+            List<Usuario> usuarios = usuarioRepository.findUsrByUsrname(username);
+            if (usuarios.isEmpty()){
+                throw new Exception("No existe usuario con este mail, por favor verifique los datos");
+            }
+            if (usuarios.size()>1){
+                throw new Exception("Ha ocurrido un error, por favor intente más tarde");
+            }
+            if ( !(this.checkPassword(username, password) )) {
+                throw new Exception("La contraseña ingresada es incorrecta, intente nuevamente");
+            }
+            if (usuarios.get(0).getFechaBaja()== null) {
+                String result ="El usuario " + username + " se ha logeado correctamente. ";
+
+                if ( this.firstTimeEmpleado(usuarios.get(0)) && !(usuarios.get(0).getRol().equals(Rol.CLIENTE)) ){
+                    result = result + "EL EMPLEADO DEBE CAMBIAR LA CONTRASEÑA";
+                }
+
+                return result;
+            }else {
+                return "Su usuario está dado de baja. Por favor consulte con el administrador";
+            }
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

@@ -1,8 +1,8 @@
 package com.elbuensabor.elbuensabor.controllers;
 
 import com.elbuensabor.elbuensabor.dto.DTOCliente;
+import com.elbuensabor.elbuensabor.dto.DTOEmpleado;
 import com.elbuensabor.elbuensabor.entities.Persona;
-import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.services.PersonaServiceImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,25 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "ebs/personas")
 public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaServiceImpl>{
 
-    @GetMapping("/searchPersonaApellido")
-    public ResponseEntity<?> searchPersonaApellido (@RequestParam String apellido, Pageable pageable){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchPersonaApellido(apellido, pageable));
-        }catch (Exception e){
-            String strErr = e.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
-        }
-    }
-
-    @GetMapping("/searchPersonaNombre")
-    public ResponseEntity<?> searchPersonaNombre (@RequestParam String nombre, Pageable pageable){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.searchPersonaNombre(nombre, pageable));
-        }catch (Exception e){
-            String strErr = e.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
-        }
-    }
 
     @PostMapping("/signUpCliente")
     public ResponseEntity<?> signUpCliente (@RequestBody Persona persona, String pswd1, String pswd2){
@@ -56,30 +37,60 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
         }
     }
 
-    @PostMapping("/signIn")
-    public ResponseEntity<?> signIn (@RequestParam String email, @RequestParam String password){
+    @GetMapping("/getAllClientes")
+    public ResponseEntity<?> getAllClientes (){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(email, password));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getAllClientes());
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
         }
     }
 
-    @PutMapping("/updateCliente")
-    public ResponseEntity<?> updateCliente (@RequestBody DTOCliente dtoCliente){
+    @GetMapping("/getCliente")
+    public ResponseEntity<?> getCliente (@RequestParam Long id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateCliente(dtoCliente));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getCliente(id));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
         }
     }
 
-    @PutMapping("/updateEmpleado")
-    public ResponseEntity<?> updateEmpleado(@RequestBody Persona persona, @RequestParam(name = "id") Long id, Rol rol){
+    @PatchMapping("/patchCliente")
+    public ResponseEntity<?> updateCliente (@RequestBody DTOCliente dtoCliente, @RequestParam Long id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateEmpleado(persona, id, rol));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateCliente(dtoCliente, id));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @GetMapping("/getAllEmpleado")
+    public ResponseEntity<?> getAllEmpleados (){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getAllEmpleados());
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @GetMapping("/getEmpleado")
+    public ResponseEntity<?> getEmpleado (@RequestParam Long id){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getEmpleado(id));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+    @PatchMapping("/patchEmpleado")
+    public ResponseEntity<?> updateEmpleado (@RequestBody DTOEmpleado dtoEmpleado, @RequestParam Long id){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateEmpleado(dtoEmpleado, id));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
