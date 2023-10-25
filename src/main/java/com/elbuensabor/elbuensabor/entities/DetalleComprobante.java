@@ -5,14 +5,14 @@ import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
-import java.util.Date;
+
 @Entity
 @Table(name="detalle_factura")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DetalleFactura extends BaseEntity{
+public class DetalleComprobante extends BaseEntity{
     @NotNull
     private Integer cantidad;
 
