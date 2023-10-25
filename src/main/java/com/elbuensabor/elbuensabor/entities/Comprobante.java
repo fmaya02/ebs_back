@@ -12,6 +12,8 @@ import java.util.List;
 @SuperBuilder(toBuilder=true)
 public abstract class Comprobante extends BaseEntity{
 
+    protected Comprobante(){}
+
     @Column(name = "fecha_comprobante")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaComprobante;

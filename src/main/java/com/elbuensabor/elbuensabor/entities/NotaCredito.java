@@ -15,6 +15,10 @@ public class NotaCredito extends Comprobante{
     @JoinColumn(name = "factura_id")
     private Factura factura;
 
+    public NotaCredito() {
+        super();
+    }
+
 
     public void setFactura(Factura factura){this.factura = factura;}
 }
