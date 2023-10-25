@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class ElbuensaborApplication {
@@ -37,8 +38,7 @@ public class ElbuensaborApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository ) {
-
+	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository ) {
 		return args -> {
 
 			Localidad localidad1 = Localidad.builder()
@@ -65,11 +65,39 @@ public class ElbuensaborApplication {
 			persona1.addDomicilio(domicilio1);
 			clienteRepository.save(persona1);
 
+			Insumo insumo1=Insumo.builder()
+					.denominacion("Harina 0000")
+					.stockActual(new BigDecimal(20))
+					.precioCompra(new BigDecimal(150))
+					.stockMinimo(new BigDecimal(5))
+					.build();
+			Insumo insumo2=Insumo.builder()
+					.denominacion("Levadura")
+					.stockActual(new BigDecimal(20))
+					.precioCompra(new BigDecimal(100))
+					.stockMinimo(new BigDecimal(5))
+					.build();
+
+			insumoRepository.save(insumo1);
+			insumoRepository.save(insumo2);
+
+			ArticuloInsumo articuloInsumo1=ArticuloInsumo.builder()
+					.insumo(insumo1)
+					.cantidad(new BigDecimal(200))
+					.build();
+			ArticuloInsumo articuloInsumo2=ArticuloInsumo.builder()
+					.insumo(insumo2)
+					.cantidad(new BigDecimal(200))
+					.build();
 			RubroArticulo rubroArticulo1 = RubroArticulo.builder()
 					.fechaAlta(new Date())
 					.denominacion("Pizza")
 					.build();
 			rubroArticuloRepository.save(rubroArticulo1);
+
+			List<ArticuloInsumo> articuloInsumos=new ArrayList<>();
+			articuloInsumos.add(articuloInsumo1);
+			articuloInsumos.add(articuloInsumo2);
 
 			Articulo articulo1 = Articulo.builder()
 					.costo(new BigDecimal(30000))
@@ -77,6 +105,7 @@ public class ElbuensaborApplication {
 					.denominacion("Pizza con piña")
 					.descripcion("que asco")
 					.articuloRubro(rubroArticulo1)
+					.articuloInsumos(articuloInsumos)
 					.build();
 			articuloRepository.save(articulo1);
 
@@ -90,11 +119,12 @@ public class ElbuensaborApplication {
 			arraydetalle.add(detalle1);
 
 			Pedido pedido1 = Pedido.builder()
-					.fechaAlta(new Date())
+					.nroPedido(456465L)
+					.fechaPedido(new Date())
 					.persona(persona1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)
-					.estado(EstadoPedido.PENDIENTE_PAGO)
+					.estado(EstadoPedido.A_CONFIRMAR)
 					.pedidoDetalles(arraydetalle)
 					.build();
 			pedidoRepository.save(pedido1);
