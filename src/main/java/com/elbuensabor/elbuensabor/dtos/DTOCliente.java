@@ -1,12 +1,10 @@
-package com.elbuensabor.elbuensabor.dto;
+package com.elbuensabor.elbuensabor.dtos;
 
 import com.elbuensabor.elbuensabor.enums.EstadoPersona;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Builder
 @AllArgsConstructor

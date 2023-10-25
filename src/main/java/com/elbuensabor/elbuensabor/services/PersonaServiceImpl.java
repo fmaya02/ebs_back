@@ -1,7 +1,9 @@
 package com.elbuensabor.elbuensabor.services;
 
-import com.elbuensabor.elbuensabor.dto.DTOCliente;
-import com.elbuensabor.elbuensabor.dto.DTOEmpleado;
+import com.elbuensabor.elbuensabor.dtos.DTOCliente;
+import com.elbuensabor.elbuensabor.dtos.DTOClienteRanking;
+import com.elbuensabor.elbuensabor.dtos.DTOEmpleado;
+import com.elbuensabor.elbuensabor.entities.Pedido;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.enums.EstadoPersona;
@@ -10,7 +12,10 @@ import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.PersonaRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +26,9 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     private PersonaRepository personaRepository;
     @Autowired
     private UsuarioServiceImpl usuarioService;
+
+    //@Autowired
+    //private PedidoServiceImpl pedidoService;
 
     public PersonaServiceImpl(BaseRepository<Persona,Long> baseRepository, PersonaRepository personaRepository){
         super(baseRepository);
@@ -140,9 +148,9 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public DTOCliente updateCliente(DTOCliente dtoCliente, Long id) throws Exception {
+    public DTOCliente patchCliente(DTOCliente dtoCliente, Long id) throws Exception {
         try {
-            //para que esto funcione bien, el dto debe tener valores null en lo que no se quiera actualizar de la entidad
+            //para que esto funcione bien, el dtos debe tener valores null en lo que no se quiera actualizar de la entidad
             //si esto no es así, se pisará lo que sea que valgan esas propiedades en el json en la entidad a actualizar
             ModelMapper modelMapper = new ModelMapper();
             Persona persona = findById(id);
@@ -182,9 +190,9 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public DTOEmpleado updateEmpleado(DTOEmpleado dtoEmpleado, Long id) throws Exception {
+    public DTOEmpleado patchEmpleado(DTOEmpleado dtoEmpleado, Long id) throws Exception {
         try {
-            //para que esto funcione bien, el dto debe tener valores null en lo que no se quiera actualizar de la entidad
+            //para que esto funcione bien, el dtos debe tener valores null en lo que no se quiera actualizar de la entidad
             //si esto no es así, se pisará lo que sea que valgan esas propiedades en el json en la entidad a actualizar
             ModelMapper modelMapper = new ModelMapper();
             Persona persona = findById(id);
@@ -222,6 +230,30 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
             }
             dtoRetorno.setRol(personaPersistida.getUsuario().getRol());
             return dtoRetorno;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<DTOClienteRanking> getRankingClientes() throws Exception {
+        try{
+            List<DTOClienteRanking> dtos = new ArrayList<>();
+            List<Persona> clientes = personaRepository.getAllClientes();
+            for (Persona persona: clientes){
+                DTOClienteRanking dtoClienteRanking = new DTOClienteRanking();
+                dtoClienteRanking.setNombre(persona.getNombre());
+                dtoClienteRanking.setApellido(persona.getApellido());
+                //List<Pedido> pedidos = pedidoService.getPedidos(persona.getId());
+                dtoClienteRanking.setCantPedidos(pedidos.size());
+                BigDecimal importeTotal= new BigDecimal(0);
+                for (Pedido pedido : pedidos){
+                    importeTotal = importeTotal.add(pedido.getTotal);
+                }
+                dtoClienteRanking.setImporteTotal(importeTotal);
+                dtos.add(dtoClienteRanking);
+            }
+            return dtos;
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

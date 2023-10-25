@@ -1,4 +1,4 @@
-package com.elbuensabor.elbuensabor.dto;
+package com.elbuensabor.elbuensabor.dtos;
 
 import com.elbuensabor.elbuensabor.enums.EstadoPersona;
 import com.elbuensabor.elbuensabor.enums.Rol;

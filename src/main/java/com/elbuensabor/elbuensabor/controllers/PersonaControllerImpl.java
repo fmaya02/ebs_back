@@ -1,11 +1,10 @@
 package com.elbuensabor.elbuensabor.controllers;
 
-import com.elbuensabor.elbuensabor.dto.DTOCliente;
-import com.elbuensabor.elbuensabor.dto.DTOEmpleado;
+import com.elbuensabor.elbuensabor.dtos.DTOCliente;
+import com.elbuensabor.elbuensabor.dtos.DTOEmpleado;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.services.PersonaServiceImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +12,31 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(path = "ebs/personas")
+@RequestMapping(path = "/ebs/personas")
 public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaServiceImpl>{
 
+
+    @GetMapping("/getRankingClientes")
+    public ResponseEntity<?> getRankingClientes (){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.getRankingClientes());
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
+
+
+
+    @PutMapping("/editPersona")
+    public ResponseEntity<?> editPersona (@RequestBody Persona persona, @RequestParam Long id){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.update(id, persona));
+        }catch (Exception e){
+            String strErr = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+        }
+    }
 
     @PostMapping("/signUpCliente")
     public ResponseEntity<?> signUpCliente (@RequestBody Persona persona, String pswd1, String pswd2){
@@ -58,9 +79,9 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
     }
 
     @PatchMapping("/patchCliente")
-    public ResponseEntity<?> updateCliente (@RequestBody DTOCliente dtoCliente, @RequestParam Long id){
+    public ResponseEntity<?> patchCliente (@RequestBody DTOCliente dtoCliente, @RequestParam Long id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateCliente(dtoCliente, id));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.patchCliente(dtoCliente, id));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
@@ -88,9 +109,9 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
     }
 
     @PatchMapping("/patchEmpleado")
-    public ResponseEntity<?> updateEmpleado (@RequestBody DTOEmpleado dtoEmpleado, @RequestParam Long id){
+    public ResponseEntity<?> patchEmpleado (@RequestBody DTOEmpleado dtoEmpleado, @RequestParam Long id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.updateEmpleado(dtoEmpleado, id));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.patchEmpleado(dtoEmpleado, id));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

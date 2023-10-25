@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.repositories;
 
+import com.elbuensabor.elbuensabor.dtos.DTOClienteRanking;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +24,7 @@ public interface PersonaRepository extends BaseRepository<Persona, Long> {
     @Query(value = "SELECT P.* FROM PERSONA P INNER JOIN USUARIO U ON P.USUARIO_ID = U.Id WHERE U.ROL != 'CLIENTE'",
             nativeQuery = true)
     List<Persona> getAllEmpleados();
+
+    @
+    int getCantPedidos();
 }

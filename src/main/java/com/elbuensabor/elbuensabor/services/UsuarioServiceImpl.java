@@ -69,8 +69,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
                     .build();
             auth0int = auth0int + 1;
             auth0counter = "" + auth0int + "";
-            usuarioRepository.save(newUsuario);
-            return newUsuario;
+            return usuarioRepository.save(newUsuario);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

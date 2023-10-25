@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(path = "ebs/usuarios")
+@RequestMapping(path = "/ebs/usuarios")
 public class UsuarioControllerImpl extends BaseControllerImpl<Usuario, UsuarioServiceImpl> {
 
     @PostMapping("/signIn")
