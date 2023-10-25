@@ -30,6 +30,7 @@ public class NotaCreditoServiceImpl extends BaseServiceImpl<NotaCredito,Long> im
                     .nro(nro2)
                     .total(factura.getPedido().getTotal())
                     .build();
+            newNotaCredito.setFactura(factura);
             notaCreditoRepository.save(newNotaCredito);
             return newNotaCredito;
         }catch (Exception e){

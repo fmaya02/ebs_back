@@ -49,5 +49,5 @@ public class Factura extends Comprobante{
     public void setFacturaDetalles(List<DetalleComprobante> detalles){
         this.facturaDetalles=detalles;
     }
-
+    public void setPedido(Pedido pedido){this.pedido = pedido;}
 }

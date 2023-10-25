@@ -1,17 +1,12 @@
 package com.elbuensabor.elbuensabor.services;
 
 import com.elbuensabor.elbuensabor.dtos.DTOMovimientosMonetarios;
-import com.elbuensabor.elbuensabor.entities.Comprobante;
-import com.elbuensabor.elbuensabor.entities.DetalleComprobante;
 import com.elbuensabor.elbuensabor.entities.Factura;
 import com.elbuensabor.elbuensabor.entities.Pedido;
 import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.FacturaRepository;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import lombok.AllArgsConstructor;
-import org.springframework.aot.generate.GeneratedTypeReference;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,31 +27,35 @@ public class FacturaServiceImpl extends BaseServiceImpl<Factura, Long> implement
         this.facturaRepository = facturaRepository;
     }
 @Override
-public Page<Factura> searchFacturaPedido (Long pedido_id, Pageable pageable) throws  Exception {
+public Page<Factura> searchFacturaPedido(Long Pedidoid, Pageable pageable) throws  Exception {
     try {
-        return facturaRepository.searchFacturaPedido(pedido_id, pageable);
+        return facturaRepository.searchFacturaPedido(Pedidoid, pageable);
     } catch (Exception e) {
         throw new Exception((e.getMessage()));
     }
 }
 
     @Override
+    @Transactional
     public Factura createFactura(Pedido pedido, FormaPago formaPago, int nro1) throws Exception {
-    try{
-    Factura newFactura = Factura.builder()
-            .fechaComprobante(new Date())
-            .nro(nro1)
-            .total(pedido.getTotal())
-            .fechaFacturacion(new Date())
-            .formaPago(formaPago)
-            .pedido(pedido)
-            .build();
-        facturaRepository.save(newFactura);
-        return newFactura;
-    }catch (Exception e){
-        throw new Exception(e.getMessage());
-    }
-    }
+            try {
+                Factura newFactura = Factura.builder()
+
+                        .fechaComprobante(new Date())
+                        .nro(nro1)
+                        .total(pedido.getTotal())
+                        .fechaFacturacion(new Date())
+                        .formaPago(formaPago)
+                        .pedido(pedido)
+                        .build();
+                newFactura.setPedido(pedido);
+                facturaRepository.save(newFactura);
+                return newFactura;
+
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
+            }
+        }
 
     @Override
     public DTOMovimientosMonetarios getFacturasByFecha(String fechaDesde, String fechaHasta) throws Exception {

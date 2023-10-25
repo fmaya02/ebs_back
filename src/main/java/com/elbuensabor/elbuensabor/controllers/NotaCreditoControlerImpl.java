@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @CrossOrigin
 @RequestMapping(path = "ebs/NotaCredito")
 public class NotaCreditoControlerImpl extends BaseControllerImpl <NotaCredito, NotaCreditoServiceImpl> {
-    @PostMapping("/CreateFactura")
+    @PostMapping("/CreateNotaCredito")
     public ResponseEntity<?> createNotaCredito (@RequestBody Factura factura, int nro2){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(servicio.createNotaCredito(factura,nro2));

@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface FacturaRepository extends BaseRepository<Factura, Long> {
 
-    @Query(value = "SELECT * FROM factura f WHERE pedido LIKE %:filtro%",
-    nativeQuery = true)
-    Page<Factura> searchFacturaPedido (@Param("filtro") Long filtro, Pageable pageable);
-
     @Query(value="SELECT f FROM Factura f WHERE YEAR(f.fechaComprobante) >= YEAR(:fechaDesde) AND MONTH(f.fechaComprobante) >= MONTH(:fechaDesde) AND DAY(f.fechaComprobante) >= DAY(:fechaDesde)" +
             "AND YEAR(f.fechaComprobante) <= YEAR(:fechaHasta) AND MONTH(f.fechaComprobante) <= MONTH(:fechaHasta) AND DAY(f.fechaComprobante) <= DAY(:fechaHasta)")
     List<Factura> getFacturasByFecha(@Param("fechaDesde")Date fechaDesde, @Param("fechaHasta") Date fechaHasta);
+
+    @Query(value = "SELECT * FROM factura WHERE pedido_id = :pedidoid",
+        nativeQuery = true)
+    Page<Factura> searchFacturaPedido(@Param("pedidoid") Long pedidoId, Pageable pageable);
 }
