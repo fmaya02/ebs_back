@@ -1,22 +1,21 @@
 package com.elbuensabor.elbuensabor.entities;
 
 import com.elbuensabor.elbuensabor.enums.FormaPago;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="factura")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Factura extends BaseEntity{
+@SuperBuilder(toBuilder=true)
+public class Factura extends Comprobante{
 
     @NotNull
     @Column(name = "fecha_facturacion")
@@ -38,33 +37,16 @@ public class Factura extends BaseEntity{
     @NotNull
     private FormaPago formaPago;
 
-    @NotNull
-    @Column(name = "total_venta", precision = 10, scale = 2)
-    private BigDecimal totalVenta;
-
-    @NotNull
-    @Column(name = "fecha_alta")
+    @Column(name = "fecha_anulacion")
+    @Nullable
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
-
-    @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
-
-    @Column(name = "fecha_baja")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaBaja;
+    private Date fechaAnulacion;
 
     @NotNull
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="factura_id")
-    List<DetalleFactura> facturaDetalles=new ArrayList<>();
-
-    public void setFacturaDetalles(List<DetalleFactura> detalles){
+    public void setFacturaDetalles(List<DetalleComprobante> detalles){
         this.facturaDetalles=detalles;
     }
 

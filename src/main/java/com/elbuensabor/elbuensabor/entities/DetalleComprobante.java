@@ -2,17 +2,18 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
-import java.util.Date;
+
 @Entity
-@Table(name="detalle_factura")
+@Table(name="detalle_comprobante")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class DetalleFactura extends BaseEntity{
+@SuperBuilder(toBuilder=true)
+public class DetalleComprobante extends BaseEntity{
     @NotNull
     private Integer cantidad;
 

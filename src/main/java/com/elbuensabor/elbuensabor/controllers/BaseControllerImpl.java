@@ -1,6 +1,5 @@
 package com.elbuensabor.elbuensabor.controllers;
 
-import com.elbuensabor.elbuensabor.ElbuensaborApplication;
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
 import com.elbuensabor.elbuensabor.services.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ public abstract class BaseControllerImpl<E extends BaseEntity, S extends BaseSer
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         try {

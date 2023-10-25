@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor;
 
 import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
+import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class ElbuensaborApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository) {
+	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository ) {
+
 		return args -> {
 
 			Localidad localidad1 = Localidad.builder()
@@ -53,15 +55,15 @@ public class ElbuensaborApplication {
 					.build();
 			domicilioRepository.save(domicilio1);
 
-			Cliente cliente1 = Cliente.builder()
+			Persona persona1 = Persona.builder()
 					.nombre("Geralt")
 					.apellido("de Rivia")
 					.fechaAlta(new Date())
 					.email("geralt.derivia@kaermorhen.com")
 					.domicilios(new ArrayList<Domicilio>())
 					.build();
-			cliente1.addDomicilio(domicilio1);
-			clienteRepository.save(cliente1);
+			persona1.addDomicilio(domicilio1);
+			clienteRepository.save(persona1);
 
 			RubroArticulo rubroArticulo1 = RubroArticulo.builder()
 					.fechaAlta(new Date())
@@ -89,13 +91,31 @@ public class ElbuensaborApplication {
 
 			Pedido pedido1 = Pedido.builder()
 					.fechaAlta(new Date())
-					.cliente(cliente1)
+					.persona(persona1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)
 					.estado(EstadoPedido.A_CONFIRMAR)
 					.pedidoDetalles(arraydetalle)
 					.build();
 			pedidoRepository.save(pedido1);
+
+			Factura factura1 = Factura.builder()
+					.fechaComprobante(new Date())
+					.nro(1)
+					.total(pedido1.getTotal())
+					.fechaFacturacion(new Date())
+					.formaPago(FormaPago.EFECTIVO)
+					.pedido(pedido1)
+					.build();
+			facturaRepository.save(factura1);
+			NotaCredito newNotaCredito = NotaCredito.builder()
+					.factura(factura1)
+					.fechaComprobante(new Date())
+					.nro(2)
+					.total(factura1.getPedido().getTotal())
+					.build();
+			notaCreditoRepository.save(newNotaCredito);
+			System.out.println("Corriendo API\n");
 
 		};
 	}

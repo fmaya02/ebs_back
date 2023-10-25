@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,8 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Cliente extends BaseEntity{
+@SuperBuilder(toBuilder=true)
+public class Persona extends BaseEntity{
     private String nombre;
 
     private String apellido;
@@ -37,7 +38,7 @@ public class Cliente extends BaseEntity{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaBaja;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name="cliente_id")
     private List<Domicilio> domicilios=new ArrayList<>();
 
