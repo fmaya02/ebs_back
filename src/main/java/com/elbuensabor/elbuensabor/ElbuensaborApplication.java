@@ -88,6 +88,7 @@ public class ElbuensaborApplication {
 			arraydetalle.add(detalle1);
 
 			Pedido pedido1 = Pedido.builder()
+					.nroPedido(456465L)
 					.fechaAlta(new Date())
 					.persona(persona1)
 					.domicilioEntrega(domicilio1)

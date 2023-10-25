@@ -13,11 +13,25 @@ import java.util.List;
 
 @Repository
 public interface PedidoRepository extends BaseRepository<Pedido, Long> {
-    @Query(value="SELECT p FROM Pedido p WHERE p.estado=:filtro")
-    public List<Pedido> searchPedidosByEstado(@Param("filtro") EstadoPedido estadoFiltro);
-    @Query(value="SELECT * FROM pedido WHERE id_cliente=:filtro",
-    nativeQuery = true)
-    public Page<Pedido> getAllByCliente(@Param("filtro") Long idCliente, Pageable pageable);
+    @Query(value="SELECT p FROM Pedido p WHERE p.estado=:estadoFiltro")
+    public List<Pedido> searchPedidosByEstado(@Param("estadoFiltro") EstadoPedido estadoFiltro);
+    @Query(value="SELECT * FROM pedido WHERE id_cliente=:idCliente",
+            nativeQuery = true)
+    public Page<Pedido> getAllByCliente(@Param("idCliente") Long idCliente, Pageable pageable);
+    @Query(value="SELECT p FROM Pedido p WHERE  p.fechaPedido=:fechaActual",
+            countQuery = "SELECT count(p) FROM Pedido p WHERE  p.fechaPedido=:fechaActual")
+    public Page<Pedido> getPedidosActuales(@Param("fechaActual") Date fechaActual, Pageable pageable);
+//    @Query(value="SELECT p FROM Pedido p WHERE p.estado=:estadoFiltro AND p.fechaPedido=:fechaActual")
+//    public Page<Pedido> getPedidosByEstado(@Param("estadoFiltro") EstadoPedido estadoFiltro, @Param("fechaActual") Date fechaActual, Pageable pageable);
 
+//    @Query(value = "SELECT p FROM Pedido p WHERE p.estado = :estadoFiltro AND YEAR(p.fechaPedido) = YEAR(:fechaActual) AND MONTH(p.fechaPedido) = MONTH(:fechaActual) AND DAY(p.fechaPedido) = DAY(:fechaActual)",
+//            countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.estado = :estadoFiltro AND YEAR(p.fechaPedido) = YEAR(:fechaActual) AND MONTH(p.fechaPedido) = MONTH(:fechaActual) AND DAY(p.fechaPedido) = DAY(:fechaActual)")
+    @Query("SELECT p FROM Pedido p WHERE p.estado = :estadoFiltro " +
+        "AND FUNCTION('YEAR', p.fechaPedido) = FUNCTION('YEAR', :fechaActual) " +
+        "AND FUNCTION('MONTH', p.fechaPedido) = FUNCTION('MONTH', :fechaActual) " +
+        "AND FUNCTION('DAY', p.fechaPedido) = FUNCTION('DAY', :fechaActual)")
+    public Page<Pedido> getPedidosByEstado(@Param("estadoFiltro") EstadoPedido estadoFiltro, @Param("fechaActual") Date fechaActual, Pageable pageable);
 
+    @Query(value="SELECT p FROM Pedido p WHERE p.nroPedido=:numeroPedido")
+    public Pedido searchPedidosByNumero(@Param("numeroPedido") Long nroPedido);
 }

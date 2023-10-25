@@ -22,6 +22,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Pedido extends BaseEntity{
+
+    @NotNull
+    @Column(name="nro_pedido")
+    private Long nroPedido;
+
     @NotNull
     @Column(name = "fecha_pedido")
     @Temporal(TemporalType.TIMESTAMP)

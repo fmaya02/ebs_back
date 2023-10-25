@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements PedidoService {
@@ -58,8 +59,8 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
             //setear hora estimada finalizacion
             pedido.setHoraEstimadaFinalizacion(calendar.getTime());
             pedido=save(pedido);
-            //descontar stock
-            descontarStock(pedido.getPedidoDetalles());
+            //descontar stock y setear totalCosto
+            pedido.setTotalCosto(descontarStock(pedido.getPedidoDetalles()));
             return pedido;
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -75,9 +76,51 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
         }
     }
 
-    private void descontarStock(List<DetallePedido> detallesPedido){
+    @Override
+    public Page<Pedido> getPedidosByEstadoAndFecha(EstadoPedido estadoPedido, Pageable pageable) throws Exception {
+        try{
+            Date fechaActual=new Date();
+            Page<Pedido> pedidos= pedidoRepository.getPedidosByEstado(estadoPedido, fechaActual, pageable);
+            return pedidos;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Page<Pedido> getPedidosActuales(Pageable pageable) throws Exception {
+        try{
+            return pedidoRepository.getPedidosActuales(new Date(), pageable);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Pedido updateEstado(EstadoPedido estadoPedido, Long idPedido) throws Exception {
+        try{
+            Pedido pedidoActual=this.findById(idPedido);
+            pedidoActual.setEstado(estadoPedido);
+            return this.save(pedidoActual);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Pedido searchPedidoByNumero(Long nroPedido) throws Exception {
+        try{
+            return pedidoRepository.searchPedidosByNumero(nroPedido);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private BigDecimal descontarStock(List<DetallePedido> detallesPedido){
+        BigDecimal totalCosto=new BigDecimal(0);
         for(DetallePedido detallePedido:detallesPedido){
             Articulo articulo=detallePedido.getArticulo();
+            totalCosto.add(articulo.getCosto().multiply(new BigDecimal(detallePedido.getCantidad())));
             List<ArticuloInsumo> articuloInsumos=articulo.getArticuloInsumos();
             for(ArticuloInsumo articuloInsumo:articuloInsumos){
                 Insumo insumo=articuloInsumo.getInsumo();
@@ -85,6 +128,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
                 insumo.setStockActual(stockActual.add(articuloInsumo.getCantidad().multiply(new BigDecimal(-1))));
             }
         }
+        return totalCosto;
     }
 
 }

@@ -13,4 +13,12 @@ public interface PedidoService extends BaseService<Pedido, Long> {
     public Pedido confirmPedido(Pedido pedido)throws Exception;
 
     public Page<Pedido> getAllByCliente(Long idCliente, Pageable pageable)throws Exception;
+
+    public Page<Pedido> getPedidosByEstadoAndFecha(EstadoPedido estadoPedido, Pageable pageable) throws Exception;
+
+    public Page<Pedido> getPedidosActuales(Pageable pageable) throws Exception;
+
+    public Pedido updateEstado(EstadoPedido estadoPedido, Long idPedido) throws Exception;
+
+    public Pedido searchPedidoByNumero(Long nroPedido) throws Exception;
 }
