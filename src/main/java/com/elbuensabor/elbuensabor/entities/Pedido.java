@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Pedido extends BaseEntity{
     @NotNull
     @Column(name = "fecha_pedido")
@@ -62,7 +63,7 @@ public class Pedido extends BaseEntity{
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    private Persona persona;
 
     @NotNull
     @Column(name = "fecha_alta")

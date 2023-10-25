@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class UnidadMedida extends BaseEntity{
     @NotNull
     @Column(length = 255)

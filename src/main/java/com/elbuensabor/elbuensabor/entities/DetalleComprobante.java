@@ -6,24 +6,20 @@ import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
+
 @Entity
-@Table(name="detalle_pedido")
+@Table(name="detalle_comprobante")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder=true)
-public class DetallePedido extends BaseEntity{
-
+public class DetalleComprobante extends BaseEntity{
     @NotNull
     private Integer cantidad;
 
     @NotNull
     @Column(name = "subtotal", precision = 10, scale = 2)
     private BigDecimal subtotal;
-
-    @NotNull
-    @Column(name = "subtotal_costo", precision = 10, scale = 2)
-    private BigDecimal subtotalCosto;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "articulo_id")
