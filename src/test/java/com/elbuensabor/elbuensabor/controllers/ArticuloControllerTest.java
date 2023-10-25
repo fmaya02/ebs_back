@@ -103,7 +103,13 @@ public class ArticuloControllerTest {
 
         when(articuloService.findByName(pageable, "Pizza")).thenReturn(pageTest);
 
-        assertEquals(pageTest.getContent(), this.articuloService.findByName(pageable, "Pizza").getContent());
+        this.mockMvc.perform(get("/ebs/articulo/findByName")
+                        .param("name", "Pizza")
+                        .param("page", "0")
+                        .param("size", "5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].denominacion", is("Pizza fugazzeta")));
     }
 
 }

@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@SqlResultSetMapping(
+/*@SqlResultSetMapping(
         name = "findLowStock",
         entities = {
                 @EntityResult(
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
                         }
                 )
         }
-)
+)*/
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor

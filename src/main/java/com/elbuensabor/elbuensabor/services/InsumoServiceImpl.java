@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InsumoServiceImpl extends BaseServiceImpl<Insumo, Long> implements InsumoService{
 
@@ -23,9 +25,9 @@ public class InsumoServiceImpl extends BaseServiceImpl<Insumo, Long> implements 
 
     @Override
     @Transactional
-    public Page<DTOArticulosBajoStock> findLowStock(Pageable pageable) throws Exception {
+    public List<DTOArticulosBajoStock> findLowStock(Pageable pageable) throws Exception {
         try {
-            Page<DTOArticulosBajoStock> entities = this.insumoRepository.findLowStock(pageable);
+            List<DTOArticulosBajoStock> entities = this.insumoRepository.findLowStock(pageable);
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
