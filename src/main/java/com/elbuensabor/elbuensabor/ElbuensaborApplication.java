@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import com.elbuensabor.elbuensabor.repositories.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class ElbuensaborApplication {
 	@Bean
 	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository ) {
 		return args -> {
-
+/*
 			Localidad localidad1 = Localidad.builder()
 					.denominacion("Kaer Morhen")
 					.fechaAlta(new Date())
@@ -132,6 +133,9 @@ public class ElbuensaborApplication {
 					.build();
 			pedidoRepository.save(pedido1);
 
+
+*/
+			System.out.println("Corriendo API\n");
 			Factura factura1 = Factura.builder()
 					.fechaComprobante(new Date())
 					.nro(1)
