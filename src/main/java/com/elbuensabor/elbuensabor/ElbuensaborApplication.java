@@ -89,7 +89,7 @@ public class ElbuensaborApplication {
 
 			Pedido pedido1 = Pedido.builder()
 					.nroPedido(456465L)
-					.fechaAlta(new Date())
+					.fechaPedido(new Date())
 					.persona(persona1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)

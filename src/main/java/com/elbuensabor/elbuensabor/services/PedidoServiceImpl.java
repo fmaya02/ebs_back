@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -79,9 +81,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
     @Override
     public Page<Pedido> getPedidosByEstadoAndFecha(EstadoPedido estadoPedido, Pageable pageable) throws Exception {
         try{
-            Date fechaActual=new Date();
-            Page<Pedido> pedidos= pedidoRepository.getPedidosByEstado(estadoPedido, fechaActual, pageable);
-            return pedidos;
+            return pedidoRepository.getPedidosByEstado(estadoPedido, new Date(), pageable);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
