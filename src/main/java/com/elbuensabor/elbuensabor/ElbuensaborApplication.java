@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor;
 
 import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
+import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @SpringBootApplication
 public class ElbuensaborApplication {
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private PersonaRepository personaRepository;
 	@Autowired
 	private DomicilioRepository domicilioRepository;
 	@Autowired
@@ -33,6 +34,9 @@ public class ElbuensaborApplication {
 	private LocalidadRepository localidadRepository;
 	@Autowired
 	private RubroArticuloRepository rubroArticuloRepository;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ElbuensaborApplication.class, args);

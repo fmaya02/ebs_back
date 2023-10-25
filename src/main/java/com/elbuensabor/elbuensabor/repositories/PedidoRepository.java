@@ -13,6 +13,10 @@ import java.util.List;
 
 @Repository
 public interface PedidoRepository extends BaseRepository<Pedido, Long> {
+  
+    @Query(value="SELECT * FROM pedido WHERE id_cliente=:idCliente",
+            nativeQuery = true)
+    public List<Pedido> getAllByCliente(@Param("idCliente") Long idCliente);
     @Query(value="SELECT p FROM Pedido p WHERE p.estado=:estadoFiltro")
     public List<Pedido> searchPedidosByEstado(@Param("estadoFiltro") EstadoPedido estadoFiltro);
     @Query(value="SELECT * FROM pedido WHERE id_cliente=:idCliente",
