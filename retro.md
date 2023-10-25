@@ -6,7 +6,7 @@
 * Espeche, Marcos 49023 
 * Maya, Facundo 48997 
 * Schulz, Santiago 47783
-* Facundo Pino 
+* Facundo Pino 47867
 
 ## Resumen del Sprint:
 ### Duración del Sprint: 2 semanas
