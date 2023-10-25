@@ -2,18 +2,16 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 @Entity
-@Table(name="articulo_rubro")
-@Data
+@Table(name="rubro_articulo")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class RubroArticulo extends BaseEntity{
     @ManyToOne()
     @JoinColumn(name = "articulo_rubro_padre_id")

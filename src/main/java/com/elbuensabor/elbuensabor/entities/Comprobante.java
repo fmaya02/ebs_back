@@ -1,6 +1,7 @@
 package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,7 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 @MappedSuperclass
+@SuperBuilder(toBuilder=true)
 public abstract class Comprobante extends BaseEntity{
+
+    protected Comprobante(){}
 
     @Column(name = "fecha_comprobante")
     @Temporal(TemporalType.TIMESTAMP)

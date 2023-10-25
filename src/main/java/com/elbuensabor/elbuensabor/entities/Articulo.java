@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Articulo extends BaseEntity{
     @NotNull
     private String denominacion;
@@ -50,10 +51,10 @@ public class Articulo extends BaseEntity{
     private Date fechaBaja;
 
     @ManyToOne()
-    @JoinColumn(name="articulo_rubro_id")
+    @JoinColumn(name="rubro_articulo_id")
     private RubroArticulo articuloRubro;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "articulo_id")
     private List<ArticuloInsumo> articuloInsumos=new ArrayList<>();
 

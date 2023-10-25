@@ -4,18 +4,16 @@ import com.elbuensabor.elbuensabor.enums.FormaPago;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="factura")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Factura extends Comprobante{
 
     @NotNull
@@ -48,8 +46,12 @@ public class Factura extends Comprobante{
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
+    public Factura() {
+        super();
+    }
+
     public void setFacturaDetalles(List<DetalleComprobante> detalles){
         this.facturaDetalles=detalles;
     }
-
+    public void setPedido(Pedido pedido){this.pedido = pedido;}
 }
