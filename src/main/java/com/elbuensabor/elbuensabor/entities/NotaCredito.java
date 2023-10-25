@@ -1,9 +1,6 @@
 package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity

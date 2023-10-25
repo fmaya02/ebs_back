@@ -3,7 +3,7 @@ package com.elbuensabor.elbuensabor.services;
 import com.elbuensabor.elbuensabor.entities.Localidad;
 import java.util.List;
 
-public interface LocalidadService {
+public interface LocalidadService extends BaseService<Localidad, Long>{
     List<Localidad> getAllLocalidades();
     Localidad getLocalidadById(Long id);
     Localidad createLocalidad(Localidad localidad);

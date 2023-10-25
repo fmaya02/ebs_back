@@ -1,9 +1,5 @@
 package com.elbuensabor.elbuensabor.dtos;
 
-
-import jakarta.persistence.EntityResult;
-import jakarta.persistence.FieldResult;
-import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

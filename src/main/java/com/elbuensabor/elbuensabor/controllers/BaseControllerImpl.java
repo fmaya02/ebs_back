@@ -1,6 +1,5 @@
 package com.elbuensabor.elbuensabor.controllers;
 
-import com.elbuensabor.elbuensabor.ElbuensaborApplication;
 import com.elbuensabor.elbuensabor.entities.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.elbuensabor.elbuensabor.services.*;
-import com.elbuensabor.elbuensabor.controllers.*;
 
 
 public abstract class BaseControllerImpl<E extends BaseEntity, S extends BaseServiceImpl<E,Long>> implements BaseController<E, Long> {

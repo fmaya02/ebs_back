@@ -1,6 +1,5 @@
 package com.elbuensabor.elbuensabor.services;
 
-import com.elbuensabor.elbuensabor.entities.DetallePedido;
 import com.elbuensabor.elbuensabor.entities.Factura;
 import com.elbuensabor.elbuensabor.entities.NotaCredito;
 

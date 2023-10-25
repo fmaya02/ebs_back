@@ -2,17 +2,13 @@ package com.elbuensabor.elbuensabor.controllers;
 
 import com.elbuensabor.elbuensabor.entities.Factura;
 import com.elbuensabor.elbuensabor.entities.NotaCredito;
-import com.elbuensabor.elbuensabor.entities.Pedido;
-import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.services.NotaCreditoServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "ebs/NotaCredito")
 public class NotaCreditoControlerImpl extends BaseControllerImpl <NotaCredito, NotaCreditoServiceImpl> {
     @PostMapping("/CreateNotaCredito")

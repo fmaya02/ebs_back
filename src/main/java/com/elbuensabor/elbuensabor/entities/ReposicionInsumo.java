@@ -2,18 +2,15 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
 
 @Data
 @Entity
 @Table(name = "reposicion_insumo")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class ReposicionInsumo extends BaseEntity{
 
     @NotNull

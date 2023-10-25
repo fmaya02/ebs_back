@@ -6,14 +6,11 @@ import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.services.FacturaServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "ebs/Factura")
 public class FacturaControllerImpl extends BaseControllerImpl<Factura, FacturaServiceImpl> {
 

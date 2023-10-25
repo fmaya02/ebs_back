@@ -3,7 +3,6 @@ package com.elbuensabor.elbuensabor.entities;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -17,7 +16,6 @@ import java.util.List;
 @Table(name = "reposicion")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Reposicion extends BaseEntity{
 
     @NotNull

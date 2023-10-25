@@ -1,6 +1,7 @@
 package com.elbuensabor.elbuensabor.services;
 
 
+import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -8,13 +9,14 @@ import com.elbuensabor.elbuensabor.repositories.LocalidadRepository;
 import com.elbuensabor.elbuensabor.entities.Localidad;
 
 @Service
-public class LocalidadServiceImpl implements LocalidadService {
-
-    private final LocalidadRepository localidadRepository;
+public class LocalidadServiceImpl extends BaseServiceImpl<Localidad, Long> implements LocalidadService {
 
     @Autowired
-    public LocalidadServiceImpl(LocalidadRepository localidadRepository) {
-        this.localidadRepository = localidadRepository;
+    private LocalidadRepository localidadRepository;
+
+    public LocalidadServiceImpl(BaseRepository<Localidad, Long> baseRepository) {
+        super(baseRepository);
+        this.baseRepository=baseRepository;
     }
 
     @Override

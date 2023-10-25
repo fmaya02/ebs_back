@@ -1,14 +1,11 @@
 package com.elbuensabor.elbuensabor.services;
-import com.elbuensabor.elbuensabor.entities.DetallePedido;
 import com.elbuensabor.elbuensabor.entities.Factura;
 import com.elbuensabor.elbuensabor.entities.NotaCredito;
 import com.elbuensabor.elbuensabor.repositories.BaseRepository;
 import com.elbuensabor.elbuensabor.repositories.NotaCreditoRepository;
-import jakarta.persistence.GenerationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Service

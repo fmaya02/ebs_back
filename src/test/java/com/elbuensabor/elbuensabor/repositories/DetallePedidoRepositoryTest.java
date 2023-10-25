@@ -48,7 +48,7 @@ public class DetallePedidoRepositoryTest {
                 .numero(123)
                 .localidad(localidad1)
                 .build();
-        Cliente cliente1 = Cliente.builder()
+        Persona cliente1 = Persona.builder()
                 .nombre("Geralt")
                 .apellido("de Rivia")
                 .fechaAlta(fechaPedido)
@@ -78,10 +78,10 @@ public class DetallePedidoRepositoryTest {
 
         Pedido pedido1 = Pedido.builder()
                 .fechaPedido(fechaPedido)
-                .cliente(cliente1)
+                .persona(cliente1)
                 .domicilioEntrega(domicilio1)
                 .tipoEnvio(TipoEnvio.DELIVERY)
-                .estado(EstadoPedido.PENDIENTE_PAGO)
+                .estado(EstadoPedido.ENTREGADO)
                 .pedidoDetalles(arraydetalle)
                 .build();
 

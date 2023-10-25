@@ -2,8 +2,6 @@ package com.elbuensabor.elbuensabor.services;
 
 import com.elbuensabor.elbuensabor.dtos.DTOArticulosMasVendidos;
 import com.elbuensabor.elbuensabor.entities.DetallePedido;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
