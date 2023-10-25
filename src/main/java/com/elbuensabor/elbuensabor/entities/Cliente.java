@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder=true)
 public class Cliente extends BaseEntity{
     private String nombre;
 
