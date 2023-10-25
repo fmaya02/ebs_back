@@ -1,48 +1,25 @@
 <<<<<<< HEAD
-# Fecha de la Retrospectiva: 4/10
+# Fecha de la Retrospectiva: 25/10
 ## Participantes:
 * Fernandez, Alejandro 46963 
 * Duran, Tatiana 41385 
 * Espeche, Marcos 49023 
 * Maya, Facundo 48997 
 * Schulz, Santiago 47783
-* Facundo Pino
+* Facundo Pino 
 
 ## Resumen del Sprint:
 ### Duración del Sprint: 2 semanas
-* Objetivos del Sprint: Presentar las entidades en Spring con todas sus relaciones, correspondientes a las modificaciones realizadas en el diagrama de clases, con las tablas implementadas en la base de datos H2, con un ejemplo de código hardcodeado en el método main. 
-* Modificaciones al Diagrama de Clases. DetallePedido y DetalleFactura apuntan al articulo Manufacturado. Cambio de nombre de ArticuloManufacturado a Articulo. Cambio de nombre de ArticuloInsumo a Insumo. Clase intermedia entre Insumo y Articulo modificada, con navegabilidad de Articulo a Insumo. Relación recursiva de ArticuloRubro eliminada, solo permanece la que representa quién es el padre del rubro. Añadimos relacion nullable entre Pedido y Domicilio. Clase nueva añadida: Localidad, para parametrizar ese dato y tenerlo aparte del domicilio.
+* Objetivos del Sprint: Completar todo el backend, cumpliendo con los criterios de aceptación de las historias de usuario otorgadas por la cátedra. Realizar pruebas unitarias, deploy en render, y probar la API con Postman. 
+* Modificaciones al Diagrama de Clases. Añadimos una herencia en la Factura, para poder hacer que la nueva clase, nota de crédito, herede también de ella para tener los métodos comunes a la Factura.
 * Problemas notables: Nada que mencionar
 
 ### Retrospectiva:
-* Lo que salió bien: Logramos desarrollar todo lo solicitado sin mayores dificultades
-* Lo que podría mejorar: Comunicación entre los miembros del grupo.
-* Acciones concretas: Realizar reuniones semanales para ponernos al día con lo que hay que hacer y con la distribución de actividades
+* Lo que salió bien: Logramos cumplir con la entrega, mejoramos la comunicación.
+* Lo que podría mejorar: La asignación de responsabilidades, porque no quedó muy bien balanceada.
+* Acciones concretas: Que todos participemos en la distribución de tareas para que todos estemos de acuerdo con las asignaciones.
 * Celebraciones: Mejor manejo a la hora de trabajar con Spring
 
 ## Conclusiones:
-=======
-# Fecha de la Retrospectiva: 4/10
-## Participantes:
-* Fernandez, Alejandro 46963 
-* Duran, Tatiana 41385 
-* Espeche, Marcos 49023 
-* Maya, Facundo 48997 
-* Schulz, Santiago 47783
-* Facundo Pino
-
-## Resumen del Sprint:
-### Duración del Sprint: 2 semanas
-* Objetivos del Sprint: Presentar las entidades en Spring con todas sus relaciones, correspondientes a las modificaciones realizadas en el diagrama de clases, con las tablas implementadas en la base de datos H2, con un ejemplo de código hardcodeado en el método main. 
-* Modificaciones al Diagrama de Clases. DetallePedido y DetalleFactura apuntan al articulo Manufacturado. Cambio de nombre de ArticuloManufacturado a Articulo. Cambio de nombre de ArticuloInsumo a Insumo. Clase intermedia entre Insumo y Articulo modificada, con navegabilidad de Articulo a Insumo. Relación recursiva de ArticuloRubro eliminada, solo permanece la que representa quién es el padre del rubro. Añadimos relacion nullable entre Pedido y Domicilio. Clase nueva añadida: Localidad, para parametrizar ese dato y tenerlo aparte del domicilio.
-* Problemas notables: Nada que mencionar
-
-### Retrospectiva:
-* Lo que salió bien: Logramos desarrollar todo lo solicitado sin mayores dificultades
-* Lo que podría mejorar: Comunicación entre los miembros del grupo.
-* Acciones concretas: Realizar reuniones semanales para ponernos al día con lo que hay que hacer y con la distribución de actividades
-* Celebraciones: Mejor manejo a la hora de trabajar con Spring
-
-## Conclusiones:
->>>>>>> facundo_domicilio_localidad
-Logramos presentar el Sprint en tiempo y forma a pesar de no tener buena comunicación en el equipo, pero es un problema que no podemos ignorar ya que en el largo plazo nos va a afectar negativamente.
+Para el siguiente Sprint tendremos un mejor entendimiento de las historias de usuario para lograr repartir mejor las responsabilidades. 
+Ahora tenemos un mejor entendimiento de testing, consultas con queries nativas y JPQL, y herramientas de versionado de código.
