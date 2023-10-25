@@ -15,4 +15,4 @@
 
 * Enlace a Jira: https://losratonesciegos.atlassian.net/jira/software/projects/SCRUM/boards/1
 * Enlace al repositorio: https://github.com/fmaya02/ebs_back
-* Enlace a Render: 
+* Enlace a Render: https://ebs-back.onrender.com
