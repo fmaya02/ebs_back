@@ -21,7 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class UsuarioControllerTest {
 
     @MockBean

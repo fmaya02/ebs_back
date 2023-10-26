@@ -21,8 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@TestPropertySource(
-        locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class DetallePedidoRepositoryTest {
     @Autowired
     private EntityManager entityManager;
@@ -42,59 +41,59 @@ public class DetallePedidoRepositoryTest {
         Date fechaFin = dateFormat.parse(fechaFinString);
         Date fechaPedido = dateFormat.parse(fechaPedidoString);
 
-        Localidad localidad1 = Localidad.builder()
+        Localidad localidadTest = Localidad.builder()
                 .denominacion("Kaer Morhen")
                 .fechaAlta(fechaPedido)
                 .build();
-        Domicilio domicilio1 = Domicilio.builder()
+        Domicilio domicilioTest = Domicilio.builder()
                 .calle("Novigrado")
                 .codigoPostal(5500)
                 .numero(123)
-                .localidad(localidad1)
+                .localidad(localidadTest)
                 .build();
-        Persona cliente1 = Persona.builder()
+        Persona clienteTest = Persona.builder()
                 .nombre("Geralt")
                 .apellido("de Rivia")
                 .fechaAlta(fechaPedido)
                 .email("geralt.derivia@kaermorhen.com")
                 .domicilios(new ArrayList<Domicilio>())
                 .build();
-        cliente1.addDomicilio(domicilio1);
-        RubroArticulo rubroArticulo1 = RubroArticulo.builder()
+        clienteTest.addDomicilio(domicilioTest);
+        RubroArticulo rubroArticuloTest = RubroArticulo.builder()
                 .fechaAlta(fechaPedido)
                 .denominacion("Pizza")
                 .build();
-        Articulo articulo1 = Articulo.builder()
+        Articulo articuloTest = Articulo.builder()
                 .costo(new BigDecimal(30000))
                 .fechaAlta(fechaPedido)
                 .denominacion("Pizza con piña")
                 .descripcion("que asco")
-                .articuloRubro(rubroArticulo1)
+                .articuloRubro(rubroArticuloTest)
                 .build();
         ArrayList<DetallePedido> arraydetalle= new ArrayList<DetallePedido>();
-        DetallePedido detalle1 = DetallePedido.builder()
-                .articulo(articulo1)
-                .subtotalCosto(articulo1.getCosto())
-                .subtotal(articulo1.getCosto())
+        DetallePedido detalleTest = DetallePedido.builder()
+                .articulo(articuloTest)
+                .subtotalCosto(articuloTest.getCosto())
+                .subtotal(articuloTest.getCosto())
                 .cantidad(1)
                 .build();
-        arraydetalle.add(detalle1);
+        arraydetalle.add(detalleTest);
 
-        Pedido pedido1 = Pedido.builder()
+        Pedido pedidoTest = Pedido.builder()
                 .fechaPedido(fechaPedido)
-                .persona(cliente1)
-                .domicilioEntrega(domicilio1)
+                .persona(clienteTest)
+                .domicilioEntrega(domicilioTest)
                 .tipoEnvio(TipoEnvio.DELIVERY)
                 .estado(EstadoPedido.ENTREGADO)
                 .pedidoDetalles(arraydetalle)
                 .build();
 
-        entityManager.persist(rubroArticulo1);
-        entityManager.persist(articulo1);
-        entityManager.persist(localidad1);
-        entityManager.persist(domicilio1);
-        entityManager.persist(cliente1);
-        entityManager.persist(pedido1);
+        entityManager.persist(rubroArticuloTest);
+        entityManager.persist(articuloTest);
+        entityManager.persist(localidadTest);
+        entityManager.persist(domicilioTest);
+        entityManager.persist(clienteTest);
+        entityManager.persist(pedidoTest);
         entityManager.flush();
 
         DTOArticulosMasVendidos dto1 = DTOArticulosMasVendidos.builder()
