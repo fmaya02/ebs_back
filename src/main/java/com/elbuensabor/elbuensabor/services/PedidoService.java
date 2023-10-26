@@ -21,4 +21,6 @@ public interface PedidoService extends BaseService<Pedido, Long> {
     public Pedido updateEstado(EstadoPedido estadoPedido, Long idPedido) throws Exception;
 
     public Pedido searchPedidoByNumero(Long nroPedido) throws Exception;
+
+    public List<Pedido> getPedidoByCliente (Long id) throws Exception;
 }

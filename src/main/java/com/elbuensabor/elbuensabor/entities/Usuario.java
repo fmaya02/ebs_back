@@ -37,8 +37,13 @@ public class Usuario extends BaseEntity{
     private Date fechaBaja;
 
     @Column(name = "rol")
+    @Enumerated(value = EnumType.STRING)
     private Rol rol;
 
+    @NotNull
     @Column(name = "contraseña")
     private String contraseña;
+
+    @Column(name = "hasloggedin")
+    private boolean hasLoggedIn;
 }

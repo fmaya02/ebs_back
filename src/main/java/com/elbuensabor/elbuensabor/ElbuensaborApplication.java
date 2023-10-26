@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor;
 
 import com.elbuensabor.elbuensabor.entities.*;
 import com.elbuensabor.elbuensabor.enums.EstadoPedido;
+import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.enums.FormaPago;
 import com.elbuensabor.elbuensabor.enums.TipoEnvio;
 import com.elbuensabor.elbuensabor.repositories.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @SpringBootApplication
 public class ElbuensaborApplication {
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private PersonaRepository personaRepository;
 	@Autowired
 	private DomicilioRepository domicilioRepository;
 	@Autowired
@@ -34,17 +35,21 @@ public class ElbuensaborApplication {
 	@Autowired
 	private RubroArticuloRepository rubroArticuloRepository;
 
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ElbuensaborApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner init(ClienteRepository clienteRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository ) {
+	CommandLineRunner init(PersonaRepository personaRepository, DomicilioRepository domicilioRepository, PedidoRepository pedidoRepository, FacturaRepository facturaRepository, ArticuloRepository articuloRepository, RubroArticuloRepository rubroArticuloRepository, LocalidadRepository localidadRepository, NotaCreditoRepository notaCreditoRepository, InsumoRepository insumoRepository, UnidadMedidaRepository unidadMedidaRepository, RubroInsumoRepository rubroInsumoRepository) {
 		return args -> {
 
 			RubroInsumo rubroInsumo = RubroInsumo.builder()
 					.denominacion("Verduras")
 					.build();
+			rubroInsumoRepository.save(rubroInsumo);
 
 			Localidad localidad1 = Localidad.builder()
 					.denominacion("Kaer Morhen")
@@ -68,12 +73,13 @@ public class ElbuensaborApplication {
 					.domicilios(new ArrayList<Domicilio>())
 					.build();
 			persona1.addDomicilio(domicilio1);
-			clienteRepository.save(persona1);
+			personaRepository.save(persona1);
 
 			UnidadMedida unidadMedida = UnidadMedida.builder()
 					.denominacion("Kilogramo")
 					.abreviatura("kg")
 					.build();
+			unidadMedidaRepository.save(unidadMedida);
 
 			Insumo insumo1=Insumo.builder()
 					.denominacion("Harina 0000")
@@ -161,6 +167,7 @@ public class ElbuensaborApplication {
 					.total(factura1.getPedido().getTotal())
 					.build();
 			notaCreditoRepository.save(newNotaCredito);
+
 			System.out.println("Corriendo API\n");
 
 		};

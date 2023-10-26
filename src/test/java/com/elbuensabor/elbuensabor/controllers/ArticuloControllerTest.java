@@ -33,7 +33,6 @@ import java.util.Date;
 import com.elbuensabor.elbuensabor.services.ArticuloServiceImpl;
 import com.elbuensabor.elbuensabor.dtos.DTOArticulosMasVendidos;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(

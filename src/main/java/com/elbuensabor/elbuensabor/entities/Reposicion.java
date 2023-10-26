@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 @Table(name = "reposicion")
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 public class Reposicion extends BaseEntity{
 
     @NotNull
