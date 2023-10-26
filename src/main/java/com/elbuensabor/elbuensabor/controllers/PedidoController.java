@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "ebs/pedidos")
+@RequestMapping(path = "/ebs/pedidos")
 public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceImpl> {
 
     @PostMapping("/confirmarPedido")

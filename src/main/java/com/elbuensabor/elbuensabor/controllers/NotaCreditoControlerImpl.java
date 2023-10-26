@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "ebs/NotaCredito")
+@RequestMapping(path = "/ebs/NotaCredito")
 public class NotaCreditoControlerImpl extends BaseControllerImpl <NotaCredito, NotaCreditoServiceImpl> {
     @PostMapping("/CreateNotaCredito")
     public ResponseEntity<?> createNotaCredito (@RequestBody Factura factura, int nro2){
