@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Date;
@@ -32,9 +33,8 @@ import java.util.Date;
 import com.elbuensabor.elbuensabor.services.ArticuloServiceImpl;
 import com.elbuensabor.elbuensabor.dtos.DTOArticulosMasVendidos;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class ArticuloControllerTest {
 
     @MockBean

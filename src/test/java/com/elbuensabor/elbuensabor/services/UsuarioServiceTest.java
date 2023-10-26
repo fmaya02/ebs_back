@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.*;
+import org.springframework.test.context.TestPropertySource;
+
 @SpringBootTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class UsuarioServiceTest {
 
     @MockBean
