@@ -72,7 +72,7 @@ public class ArticuloControllerTest {
         Pageable pageable = PageRequest.of(0,2);
         Page<DTOArticulosMasVendidos> pageTest = new PageImpl<>(listaDto, pageable, 2);
 
-        when(articuloService.findMostSold(fechaInicioString, fechaFinString, 0, 2)).thenReturn(listaDto);
+        when(articuloService.findMostSold(fechaInicioString, fechaFinString)).thenReturn(listaDto);
 
         this.mockMvc.perform(get("/ebs/articulo/findMostSold")
                 .param("date1", fechaInicioString)

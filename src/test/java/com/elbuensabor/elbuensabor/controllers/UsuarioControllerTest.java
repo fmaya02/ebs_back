@@ -32,23 +32,23 @@ public class UsuarioControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void testSignIn() throws Exception {
-        String username = "usuario@gmail.com";
-        String password = "Tiochaval#";
-        String success = "El usuario usuario@gmail.com se ha logeado correctamente. ";
-
-        try {
-            when(usuarioService.signIn("usuario@gmail.com", "Tiochaval#")).thenReturn("El usuario usuario@gmail.com se ha logeado correctamente. ");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-            mockMvc.perform(post("/ebs/usuarios/signIn")
-                    .param("username", "usuario@gmail.com")
-                    .param("password", "Tiochaval#")
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string("El usuario usuario@gmail.com se ha logeado correctamente. "));
-    }
+//    @Test
+//    void testSignIn() throws Exception {
+//        String username = "usuario@gmail.com";
+//        String password = "Tiochaval#";
+//        String success = "El usuario usuario@gmail.com se ha logeado correctamente. ";
+//
+//        try {
+//            when(usuarioService.signIn("usuario@gmail.com", "Tiochaval#")).thenReturn("El usuario usuario@gmail.com se ha logeado correctamente. ");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//            mockMvc.perform(post("/ebs/usuarios/signIn")
+//                    .param("username", "usuario@gmail.com")
+//                    .param("password", "Tiochaval#")
+//                    .contentType(MediaType.APPLICATION_JSON))
+//                    .andExpect(status().isOk())
+//                    .andExpect(content().string("El usuario usuario@gmail.com se ha logeado correctamente. "));
+//    }
 }

@@ -27,11 +27,11 @@ public class DetallePedidoServiceImpl extends BaseServiceImpl<DetallePedido, Lon
     }
     @Override
     @Transactional
-    public List<DTOArticulosMasVendidos> findMostSold(int page, int size, Date date1, Date date2) throws Exception{
+    public List<DTOArticulosMasVendidos> findMostSold(Date date1, Date date2) throws Exception{
         try {
             List<DTOArticulosMasVendidos> entities = this.detallePedidoRepository.findMostSold(date1, date2);
-            Pageable pageable = PageRequest.of(page, size);
-            Page<DTOArticulosMasVendidos> returnedPage = new PageImpl<>(entities, pageable, entities.size());
+//            Pageable pageable = PageRequest.of(page, size);
+//            Page<DTOArticulosMasVendidos> returnedPage = new PageImpl<>(entities, pageable, entities.size());
             return entities;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

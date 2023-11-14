@@ -73,8 +73,8 @@ public class ArticuloServiceTest {
         listaDto.add(dto1);
         listaDto.add(dto2);
 
-        Pageable pageable = PageRequest.of(0,2);
-        Page<DTOArticulosMasVendidos> pageTest = new PageImpl<>(listaDto, pageable, 2);
+//        Pageable pageable = PageRequest.of(0,2);
+//        Page<DTOArticulosMasVendidos> pageTest = new PageImpl<>(listaDto, pageable, 2);
 
         String fechaInicioString = "2003-01-01 15:30:00";
         String fechaFinString = "2030-01-20 15:30:30";
@@ -86,9 +86,9 @@ public class ArticuloServiceTest {
         Date fechaFin = dateFormat.parse(fechaFinString);
         Date fechaPedido = dateFormat.parse(fechaPedidoString);
 
-        when(detallePedidoServiceImpl.findMostSold(0, 2, fechaInicio, fechaFin)).thenReturn(listaDto);
+        when(detallePedidoServiceImpl.findMostSold(fechaInicio, fechaFin)).thenReturn(listaDto);
 
-        assertEquals(listaDto, articuloService.findMostSold(fechaInicioString, fechaFinString, 0, 2));
+        assertEquals(listaDto, articuloService.findMostSold(fechaInicioString, fechaFinString));
 
 
     }

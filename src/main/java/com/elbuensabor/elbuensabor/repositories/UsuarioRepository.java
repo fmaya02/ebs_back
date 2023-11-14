@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
@@ -18,5 +19,7 @@ public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
 
     @Query(value = "SELECT * FROM usuario u WHERE u.username = :username",
             nativeQuery = true)
-    List<Usuario> findUsrByUsrname(@Param("username") String username);
+    Optional<Usuario> findUsrByUsrname(@Param("username") String username);
+
+    //Optional<User> findByUsername(String username);
 }

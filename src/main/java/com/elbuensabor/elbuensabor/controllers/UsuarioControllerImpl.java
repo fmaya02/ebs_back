@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.controllers;
 
+import com.elbuensabor.elbuensabor.dtos.DTOLogin;
 import com.elbuensabor.elbuensabor.entities.Usuario;
 import com.elbuensabor.elbuensabor.services.UsuarioServiceImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioControllerImpl extends BaseControllerImpl<Usuario, UsuarioServiceImpl> {
 
     @PostMapping("/signIn")
-    public ResponseEntity<?> signIn (@RequestParam String username, @RequestParam String password){
+    public ResponseEntity<?> signIn (@RequestBody DTOLogin dtoLogin){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(username, password));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signIn(dtoLogin));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

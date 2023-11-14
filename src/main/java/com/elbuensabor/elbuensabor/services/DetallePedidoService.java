@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface DetallePedidoService extends BaseService<DetallePedido, Long> {
 
-    public List<DTOArticulosMasVendidos> findMostSold(int page, int size, Date date1, Date date2) throws Exception;
+    public List<DTOArticulosMasVendidos> findMostSold(Date date1, Date date2) throws Exception;
 
 }

@@ -1,8 +1,6 @@
 package com.elbuensabor.elbuensabor.services;
 
-import com.elbuensabor.elbuensabor.dtos.DTOCliente;
-import com.elbuensabor.elbuensabor.dtos.DTOClienteRanking;
-import com.elbuensabor.elbuensabor.dtos.DTOEmpleado;
+import com.elbuensabor.elbuensabor.dtos.*;
 import com.elbuensabor.elbuensabor.entities.Domicilio;
 import com.elbuensabor.elbuensabor.entities.Pedido;
 import com.elbuensabor.elbuensabor.entities.Persona;
@@ -40,18 +38,25 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
     }
 
     @Override
-    public Persona signUp(Persona persona, Rol rol, String pswd1, String pswd2) throws Exception {
+    public DTOToken signUp(DTORegistro dtoRegistro) throws Exception {
         try {
-            List<Persona> mailcheck = personaRepository.findPersonaByEmail(persona.getEmail());
-            Usuario newUsuario = usuarioService.createUsuario(persona, rol, pswd1, pswd2, mailcheck);
-            Domicilio dom = domicilioService.save(persona.getDomicilios().get(0));
-            persona.setUsuario(newUsuario);
-            persona.setFechaBaja(null);
-            persona.setFechaModificacion(new Date());
-            persona.setFechaAlta(new Date());
-            persona.setDomicilios(new ArrayList<>());
-            persona.addDomicilio(dom);
-            return personaRepository.save(persona);
+            List<Persona> mailcheck = personaRepository.findPersonaByEmail(dtoRegistro.getEmail());
+            Usuario newUsuario = usuarioService.createUsuario(dtoRegistro, mailcheck);
+            //Domicilio dom = domicilioService.save(persona.getDomicilios().get(0));
+            Persona persona=Persona.builder()
+                    .usuario(newUsuario)
+                    .email(dtoRegistro.getEmail())
+                    .telefono(dtoRegistro.getTelefono())
+                    .nombre(dtoRegistro.getNombre())
+                    .apellido(dtoRegistro.getApellido())
+                    .fechaBaja(null)
+                    .fechaModificacion(new Date())
+                    .fechaAlta(new Date())
+                    .build();
+            //agregar domicilio
+            personaRepository.save(persona);
+            DTOLogin dtoLogin=DTOLogin.builder().password(dtoRegistro.getPassword()).username(dtoRegistro.getUsername()).build();
+            return usuarioService.signIn(dtoLogin);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

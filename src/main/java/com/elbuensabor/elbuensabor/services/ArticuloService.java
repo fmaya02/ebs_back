@@ -11,6 +11,6 @@ public interface ArticuloService extends BaseService<Articulo, Long>{
 
     public Page<Articulo> findByName(Pageable pageable, String name) throws Exception;
 
-    public List<DTOArticulosMasVendidos> findMostSold(String fecha1, String fecha2, int page, int size) throws Exception;
+    public List<DTOArticulosMasVendidos> findMostSold(String fecha1, String fecha2) throws Exception;
 
 }

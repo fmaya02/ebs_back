@@ -22,9 +22,9 @@ public class ArticuloController extends BaseControllerImpl<Articulo, ArticuloSer
     }
 
     @GetMapping("/findMostSold")
-    public ResponseEntity<?> findMostSold(@RequestParam String date1, String date2, int page, int size) {
+    public ResponseEntity<?> findMostSold(@RequestParam String date1, String date2) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(this.servicio.findMostSold(date1, date2, page, size));
+            return ResponseEntity.status(HttpStatus.OK).body(this.servicio.findMostSold(date1, date2));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.OK).body("{\"error\":\"" + e.getMessage() + "\"}");
         }

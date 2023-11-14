@@ -5,8 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="usuario")
@@ -14,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder=true)
-public class Usuario extends BaseEntity{
+public class Usuario extends BaseEntity implements UserDetails{
     @NotNull
     @Column(name = "auth0_id", nullable = false, unique = true)
     private String auth0Id;
@@ -42,8 +47,29 @@ public class Usuario extends BaseEntity{
 
     @NotNull
     @Column(name = "contraseña")
-    private String contraseña;
+    private String password;
 
     @Column(name = "hasloggedin")
     private boolean hasLoggedIn;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() { //que rol tiene mi usuario
+        return List.of(new SimpleGrantedAuthority((rol.name())));
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

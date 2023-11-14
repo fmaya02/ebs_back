@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.controllers;
 
 import com.elbuensabor.elbuensabor.dtos.DTOCliente;
 import com.elbuensabor.elbuensabor.dtos.DTOEmpleado;
+import com.elbuensabor.elbuensabor.dtos.DTORegistro;
 import com.elbuensabor.elbuensabor.entities.Persona;
 import com.elbuensabor.elbuensabor.enums.Rol;
 import com.elbuensabor.elbuensabor.services.PersonaServiceImpl;
@@ -39,9 +40,9 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
     }
 
     @PostMapping("/signUpCliente")
-    public ResponseEntity<?> signUpCliente (@RequestBody Persona persona, String pswd1, String pswd2){
+    public ResponseEntity<?> signUpCliente (@RequestBody DTORegistro dtoRegistro){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(persona,Rol.CLIENTE,pswd1,pswd2));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(dtoRegistro));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
@@ -49,9 +50,9 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
     }
 
     @PostMapping("/signUpEmpleado")
-    public ResponseEntity<?> signUpEmpleado (@RequestBody Persona persona, Rol rol, String pswd1, String pswd2){
+    public ResponseEntity<?> signUpEmpleado (@RequestBody DTORegistro dtoRegistro){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(persona,rol,pswd1,pswd2));
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(dtoRegistro));
         }catch (Exception e){
             String strErr = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");

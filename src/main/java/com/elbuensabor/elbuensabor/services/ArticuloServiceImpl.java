@@ -41,14 +41,14 @@ public class ArticuloServiceImpl extends BaseServiceImpl<Articulo, Long> impleme
     //Productos más pedidos, entre fechas
     @Override
     @Transactional
-    public List<DTOArticulosMasVendidos> findMostSold(String fecha1, String fecha2, int page, int size) throws Exception{
+    public List<DTOArticulosMasVendidos> findMostSold(String fecha1, String fecha2) throws Exception{
         try {
             //convertir la fecha de String a Date
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date fechaInicio = dateFormat.parse(fecha1);
             Date fechaFin = dateFormat.parse(fecha2);
             /*Page<DTOArticulosMasVendidos> entities = this.detallePedidoServiceImpl.findMostSold(page, size, fechaInicio, fechaFin);*/
-            return this.detallePedidoServiceImpl.findMostSold(page, size, fechaInicio, fechaFin);
+            return this.detallePedidoServiceImpl.findMostSold(fechaInicio, fechaFin);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

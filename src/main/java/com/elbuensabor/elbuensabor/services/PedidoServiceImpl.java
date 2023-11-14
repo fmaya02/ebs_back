@@ -22,7 +22,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private InsumoRepository insumoRepository;
+    private InsumoService insumoService;
     public PedidoServiceImpl(BaseRepository<Pedido, Long> baseRepository) {
         super(baseRepository);
         this.baseRepository=baseRepository;
@@ -47,7 +47,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
             //pedido.setEstado(EstadoPedido.A_CONFIRMAR);   se setea desde el front
             int tiempoEstimadoPedidosEnCocina=0;
             int tiempoEstimadoArticuloEnCocina=0;
-            List<Pedido> pedidosEnCocina=searchPedidosByEstado(EstadoPedido.EN_COCINA);
+            List<Pedido> pedidosEnCocina=pedidoRepository.searchPedidosByEstado(EstadoPedido.EN_COCINA);
             for (Pedido pedidoCocina:pedidosEnCocina ) {
                 for(DetallePedido detallePedido:pedidoCocina.getPedidoDetalles()){
                     if(detallePedido.getArticulo().getTiempoEstimadoCocina()>tiempoEstimadoArticuloEnCocina)
@@ -139,7 +139,9 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, Long> implements 
                 BigDecimal stockActual=insumo.getStockActual();
                 BigDecimal cantidadPedido=articuloInsumo.getCantidad().multiply(new BigDecimal(-1));
                 insumo.setStockActual(stockActual.add(cantidadPedido));
-                insumoRepository.save(insumo);
+                try{
+                    insumoService.save(insumo);
+                }catch(Exception e){}
             }
         }
         return totalCosto;

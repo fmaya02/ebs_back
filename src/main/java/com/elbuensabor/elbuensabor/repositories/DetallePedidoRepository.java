@@ -22,7 +22,8 @@ public interface DetallePedidoRepository extends BaseRepository<DetallePedido, L
             "JOIN d.articulo a " +
             "JOIN a.articuloRubro r " +
             "WHERE :filtro1 < p.fechaPedido AND p.fechaPedido < :filtro2 " +
-            "GROUP BY a.Id")
+            "GROUP BY a.Id "+
+            "ORDER BY cantidad DESC")
     List<DTOArticulosMasVendidos> findMostSold(
             @Param("filtro1") Date filtro1,
             @Param("filtro2") Date filtro2

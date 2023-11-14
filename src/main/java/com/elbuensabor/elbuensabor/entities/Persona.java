@@ -23,7 +23,7 @@ public class Persona extends BaseEntity{
     @Column(name = "email")
     private String email;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
