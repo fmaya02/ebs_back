@@ -20,9 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder(toBuilder=true)
 public class Usuario extends BaseEntity implements UserDetails{
-    @NotNull
-    @Column(name = "auth0_id", nullable = false, unique = true)
-    private String auth0Id;
 
     @NotNull
     @Column(name = "username", nullable = false)

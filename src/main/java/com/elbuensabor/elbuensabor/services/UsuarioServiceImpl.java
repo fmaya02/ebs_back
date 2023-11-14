@@ -71,16 +71,13 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
 //            if (!matcheremail.matches()){
 //                throw new Exception("La direccion de correo electrónico no es válida, intente nuevamente");
 //            }
-            auth0int = auth0int + 1;
-            auth0counter = "" + auth0int + "";
             Usuario newUsuario = Usuario.builder()
                     .fechaAlta(new Date())
                     .fechaModificacion(null)
                     .fechaBaja(null)
-                    .rol(Rol.valueOf(dtoRegistro.getRol()))
+                    .rol(dtoRegistro.getRol())
                     .username(email)
                     .password(passwordEncoder.encode(dtoRegistro.getPassword()))
-                    .auth0Id(auth0counter)
                     .hasLoggedIn(false)
                     .build();
 

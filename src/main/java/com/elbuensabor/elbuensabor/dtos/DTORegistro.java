@@ -1,5 +1,6 @@
 package com.elbuensabor.elbuensabor.dtos;
 
+import com.elbuensabor.elbuensabor.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +17,5 @@ public class DTORegistro {
     private String email;
     private String username;
     private String password;
-    private String rol;
+    private Rol rol;
 }

@@ -66,7 +66,6 @@ public class ElbuensaborApplication {
 			domicilioRepository.save(domicilio1);
 
 			Usuario usuario1 = Usuario.builder()
-					.auth0Id("1")
 					.fechaAlta(new Date())
 					.username("geralt.derivia@kaermorhen.com")
 					.password("Tiochaval#")
