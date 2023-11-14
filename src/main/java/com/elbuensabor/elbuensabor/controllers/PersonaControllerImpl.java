@@ -39,7 +39,7 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
         }
     }
 
-    @PostMapping("/signUpCliente")
+    @PostMapping("/signUp")
     public ResponseEntity<?> signUpCliente (@RequestBody DTORegistro dtoRegistro){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(dtoRegistro));
@@ -49,15 +49,15 @@ public class PersonaControllerImpl extends BaseControllerImpl<Persona, PersonaSe
         }
     }
 
-    @PostMapping("/signUpEmpleado")
-    public ResponseEntity<?> signUpEmpleado (@RequestBody DTORegistro dtoRegistro){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(dtoRegistro));
-        }catch (Exception e){
-            String strErr = e.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
-        }
-    }
+//    @PostMapping("/signUpEmpleado")
+//    public ResponseEntity<?> signUpEmpleado (@RequestBody DTORegistro dtoRegistro){
+//        try {
+//            return ResponseEntity.status(HttpStatus.OK).body(servicio.signUp(dtoRegistro));
+//        }catch (Exception e){
+//            String strErr = e.getMessage();
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":"+strErr+"}");
+//        }
+//    }
 
     @GetMapping("/getAllClientes")
     public ResponseEntity<?> getAllClientes (){
