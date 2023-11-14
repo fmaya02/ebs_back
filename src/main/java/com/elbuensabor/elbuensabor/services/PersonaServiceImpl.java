@@ -56,7 +56,7 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona,Long> implements
             //agregar domicilio
             personaRepository.save(persona);
             DTOLogin dtoLogin=DTOLogin.builder().password(dtoRegistro.getPassword()).username(dtoRegistro.getUsername()).build();
-            return usuarioService.signIn(dtoLogin);
+            return usuarioService.getToken(dtoLogin);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

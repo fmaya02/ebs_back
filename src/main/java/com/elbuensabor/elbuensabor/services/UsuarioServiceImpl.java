@@ -116,12 +116,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
 ////                return "Su usuario está dado de baja. Por favor consulte con el administrador";
 //            }
             if(usuario.get().getFechaBaja()!=null) throw new Exception("Su usuario está dado de baja. Por favor consulte con el administrador");
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getUsername(), dtoLogin.getPassword()));
-            UserDetails user= (UserDetails) usuarioRepository.findUsrByUsrname(dtoLogin.getUsername()).orElseThrow();
-            String token=jwtService.getToken(user);
-            return DTOToken.builder()
-                    .token(token)
-                    .build();
+            return getToken(dtoLogin);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
@@ -153,5 +148,16 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    public DTOToken getToken(DTOLogin dtoLogin){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getUsername(), dtoLogin.getPassword()));
+        Usuario usuario=usuarioRepository.findUsrByUsrname(dtoLogin.getUsername()).orElseThrow();
+        UserDetails user= usuario;
+        String token=jwtService.getToken(user);
+        return DTOToken.builder()
+                .token(token)
+                .rol(usuario.getRol().toString())
+                .build();
     }
 }
