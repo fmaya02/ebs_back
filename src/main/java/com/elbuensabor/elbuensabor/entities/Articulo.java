@@ -52,7 +52,7 @@ public class Articulo extends BaseEntity{
 
     @ManyToOne()
     @JoinColumn(name="rubro_articulo_id")
-    private RubroArticulo articuloRubro;
+    private RubroArticulo rubroArticulo;
 
     @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "articulo_id")

@@ -2,6 +2,7 @@ package com.elbuensabor.elbuensabor.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Table(name="rubro_articulo")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @SuperBuilder(toBuilder=true)
 public class RubroArticulo extends BaseEntity{
     @ManyToOne()

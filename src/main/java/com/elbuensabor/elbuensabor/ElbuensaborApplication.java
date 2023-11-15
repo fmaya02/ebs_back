@@ -134,7 +134,7 @@ public class ElbuensaborApplication {
 					.fechaAlta(new Date())
 					.denominacion("Pizza con piña")
 					.descripcion("que asco")
-					.articuloRubro(rubroArticulo1)
+					.rubroArticulo(rubroArticulo1)
 					.articuloInsumos(articuloInsumos)
 					.build();
 			articuloRepository.save(articulo1);
