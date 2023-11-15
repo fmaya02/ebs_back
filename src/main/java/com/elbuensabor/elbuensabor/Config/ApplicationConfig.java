@@ -12,6 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -19,6 +24,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UsuarioRepository usuarioRepository;
+
+    //@Bean
+    //CorsConfigurationSource corsConfigurationSource() {
+    //    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    //    corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+    //    corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+    //    corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+    //    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //    source.registerCorsConfiguration("/**", corsConfiguration);
+    //    return source;
+    //}
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
