@@ -3,7 +3,6 @@ package com.elbuensabor.elbuensabor.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
-
 import java.math.BigDecimal;
 import java.util.Date;
 @Entity
@@ -48,4 +47,9 @@ public class Insumo extends BaseEntity{
     @Column(name = "fecha_baja")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaBaja;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rubro_insumo_id")
+    private RubroInsumo rubroInsumo;
 }

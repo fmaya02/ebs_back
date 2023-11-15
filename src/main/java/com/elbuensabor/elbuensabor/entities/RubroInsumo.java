@@ -8,34 +8,34 @@ import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
-@Entity
-@Table(name="rubro_articulo")
-@NoArgsConstructor
+
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Builder
-public class RubroArticulo extends BaseEntity{
-    @ManyToOne()
-    @JoinColumn(name = "articulo_rubro_padre_id")
-    private RubroArticulo rubroPadre;
+@Table(name = "rubro_insumo")
+public class RubroInsumo extends BaseEntity{
 
     @NotNull
+    @Column(name = "denominacion")
     private String denominacion;
+
+    @NotNull
+    @Column(name = "fecha_baja")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaBaja;
 
     @NotNull
     @Column(name = "fecha_alta")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAlta;
 
+    @NotNull
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
 
-    @Column(name = "fecha_baja")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaBaja;
 
-    public RubroArticulo(String denominacion, RubroArticulo rubroPadre) {
-        this.denominacion = denominacion;
-        this.rubroPadre = rubroPadre;
-    }
+
 }

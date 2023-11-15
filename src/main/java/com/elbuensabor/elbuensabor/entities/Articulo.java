@@ -50,7 +50,7 @@ public class Articulo extends BaseEntity{
     private Date fechaBaja;
 
     @ManyToOne()
-    @JoinColumn(name="articulo_rubro_id")
+    @JoinColumn(name="rubro_articulo_id")
     private RubroArticulo articuloRubro;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

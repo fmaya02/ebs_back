@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import com.elbuensabor.elbuensabor.repositories.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,15 +54,15 @@ public class ElbuensaborApplication {
 					.build();
 			domicilioRepository.save(domicilio1);
 
-			Persona persona1 = Persona.builder()
+			Cliente cliente1 = Cliente.builder()
 					.nombre("Geralt")
 					.apellido("de Rivia")
 					.fechaAlta(new Date())
 					.email("geralt.derivia@kaermorhen.com")
 					.domicilios(new ArrayList<Domicilio>())
 					.build();
-			persona1.addDomicilio(domicilio1);
-			clienteRepository.save(persona1);
+			cliente1.addDomicilio(domicilio1);
+			clienteRepository.save(cliente1);
 
 			RubroArticulo rubroArticulo1 = RubroArticulo.builder()
 					.fechaAlta(new Date())
@@ -74,6 +75,7 @@ public class ElbuensaborApplication {
 					.fechaAlta(new Date())
 					.denominacion("Pizza con piña")
 					.descripcion("que asco")
+					.urlImagen("https://www.losandes.com.ar/resizer/flZBRU0x5cqahizPYN75eLEVMQQ=/980x640/smart/filters:quality(75):format(webp)/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6ECEOA47QJH3LPLTJ6NG5JWBPU.jpg")
 					.articuloRubro(rubroArticulo1)
 					.build();
 			articuloRepository.save(articulo1);
@@ -89,7 +91,8 @@ public class ElbuensaborApplication {
 
 			Pedido pedido1 = Pedido.builder()
 					.fechaAlta(new Date())
-					.persona(persona1)
+					.fechaPedido(new Date())
+					.cliente(cliente1)
 					.domicilioEntrega(domicilio1)
 					.tipoEnvio(TipoEnvio.DELIVERY)
 					.estado(EstadoPedido.PENDIENTE_PAGO)
@@ -97,8 +100,9 @@ public class ElbuensaborApplication {
 					.build();
 			pedidoRepository.save(pedido1);
 
-			System.out.println("Corriendo API\n");
 
+
+			System.out.println("Corriendo API\n");
 		};
 	}
 }
